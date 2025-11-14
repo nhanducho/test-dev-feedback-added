@@ -1,0 +1,265 @@
+{{ block content }}
+
+<style>
+    .otree-title {
+        display: none !important;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .otree-body {
+        margin-top: 0;
+        max-width: 100%;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #F5F5F5;
+        padding: 20px;
+    }
+    
+    .results-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px;
+        background-color: #FFFFFF;
+        border: 3px solid #000000;
+    }
+    
+    .main-title {
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: #000000;
+        letter-spacing: 2px;
+    }
+    
+    .divider {
+        border: none;
+        border-top: 2px solid #e0e0e0;
+        margin: 30px 0;
+    }
+    
+    .section-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #000000;
+    }
+    
+    .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+    }
+    
+    .results-table td {
+        padding: 12px 15px;
+        border: none;
+        border-bottom: 2px solid #e0e0e0;
+        font-size: 16px;
+    }
+    
+    .results-table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .results-table td:first-child {
+        font-weight: normal;
+        color: #000000;
+    }
+    
+    .results-table td:last-child {
+        text-align: right;
+        font-weight: normal;
+    }
+    
+    .results-table tr.highlight-row {
+        background-color: #f0f0f0;
+    }
+    
+    .results-table tr.highlight-row td {
+        font-weight: bold;
+    }
+    
+    .results-table tr.total-row {
+        background-color: #d4edda;
+    }
+    
+    .results-table tr.total-row td {
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    .thank-you {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: #000000;
+        padding: 20px;
+        background-color: #fff9e6;
+        border: 2px solid #ffd700;
+        margin-top: 20px;
+    }
+    
+    .submit-container {
+        text-align: center;
+        margin-top: 35px;
+    }
+    
+    .otree-btn-next {
+        background: #000000 !important;
+        color: white !important;
+        border: none !important;
+        padding: 18px 50px !important;
+        font-size: 18px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+    }
+    
+    .otree-btn-next:hover {
+        background: #333333 !important;
+        transform: translateY(-2px);
+    }
+    
+    @media (max-width: 768px) {
+        .results-container {
+            padding: 30px 20px;
+        }
+        
+        .main-title {
+            font-size: 26px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+        }
+        
+        .results-table td {
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        .results-table tr.total-row td {
+            font-size: 16px;
+        }
+        
+        .thank-you {
+            font-size: 18px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .results-container {
+            padding: 20px 15px;
+        }
+        
+        .main-title {
+            font-size: 22px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+        }
+        
+        .otree-btn-next {
+            width: 100%;
+            padding: 15px 30px !important;
+        }
+    }
+</style>
+
+<div class="results-container">
+    <h1 class="main-title">RESULTS & EARNING</h1>
+    
+    <hr class="divider">
+    
+    <h2 class="section-title">Task 1</h2>
+    <table class="results-table">
+        <tr>
+            <td>Randomly Selected Decision by Computer:</td>
+            <td>Decision {{ task1_selected_decision }}</td>
+        </tr>
+        <tr>
+            <td>Your Choice in this Decision:</td>
+            <td>Option {{ task1_choice }}</td>
+        </tr>
+        <tr>
+            <td>Payoff:</td>
+            <td>{{ task1_payoff }} ECU</td>
+        </tr>
+        <tr class="highlight-row">
+            <td>Task 1 Earning:</td>
+            <td>€{{ task1_payment }}</td>
+        </tr>
+    </table>
+    
+    <h2 class="section-title">Task 2</h2>
+    <table class="results-table">
+        <tr>
+            <td>Randomly Selected Gamble by Computer:</td>
+            <td>Gamble {{ task2_selected_gamble }}</td>
+        </tr>
+        <tr>
+            <td>Your Choice in this Gamble:</td>
+            <td>{{ task2_choice }}</td>
+        </tr>
+        {{ if task2_choice == 'Accept' }}
+        <tr>
+            <td>Outcome:</td>
+            <td>{{ if task2_outcome == 1 }}Win{{ else }}Loss{{ endif }}</td>
+        </tr>
+        <tr>
+            <td>Payoff:</td>
+            <td>{{ task2_payoff }} ECU</td>
+        </tr>
+        {{ else }}
+        <tr>
+            <td>Outcome:</td>
+            <td>No gamble played</td>
+        </tr>
+        <tr>
+            <td>Payoff:</td>
+            <td>0 ECU</td>
+        </tr>
+        {{ endif }}
+        <tr class="highlight-row">
+            <td>Task 2 Earning:</td>
+            <td>€{{ task2_payment }}</td>
+        </tr>
+    </table>
+    
+    <h2 class="section-title">Summary</h2>
+    <table class="results-table">
+        <tr>
+            <td>Task 1 Payment:</td>
+            <td>€{{ task1_payment }}</td>
+        </tr>
+        <tr>
+            <td>Task 2 Payment:</td>
+            <td>€{{ task2_payment }}</td>
+        </tr>
+        <tr class="total-row">
+            <td>TOTAL EARNING:</td>
+            <td>€{{ tasks_total_payment }}</td>
+        </tr>
+    </table>
+    
+    <div class="thank-you">
+        This earning will be added to your final payment and paid to you once you complete the short demographic questionnaire on the next page!
+    </div>
+    
+    <div class="submit-container">
+        {{ next_button }}
+    </div>
+</div>
+
+{{ endblock }}

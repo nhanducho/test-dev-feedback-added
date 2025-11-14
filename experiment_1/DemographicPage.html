@@ -1,0 +1,404 @@
+{{ block content }}
+<style>
+    .otree-title {
+        display: none !important;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .otree-body {
+        max-width: 100%;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #F5F5F5;
+        padding: 20px;
+    }
+    
+    .demographics-container {
+        background-color: #FFFFFF;
+        border: 3px solid #000000;
+        border-radius: 0;
+        padding: 40px 60px;
+        max-width: 1000px;
+        width: 100%;
+        margin: 30px auto;
+    }
+    
+    .demographics-title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: #000000;
+        letter-spacing: 2px;
+        text-align: center;
+    }
+    
+    .question-block {
+        margin-bottom: 30px;
+        padding-bottom: 25px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .question-block:last-of-type {
+        border-bottom: none;
+    }
+    
+    .question-text {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #000000;
+    }
+    
+    /* Dropdown styling */
+    .dropdown-container select {
+        width: 250px;
+        padding: 12px 15px;
+        font-size: 16px;
+        border: 2px solid #e0e0e0;
+        background-color: #fafafa;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .dropdown-container select:hover {
+        border-color: #000000;
+        background-color: #f0f0f0;
+    }
+    
+    .dropdown-container select:focus {
+        outline: none;
+        border-color: #000000;
+        background-color: #ffffff;
+    }
+    
+    .dropdown-hint {
+        font-size: 14px;
+        color: #666;
+        margin-left: 15px;
+        font-style: italic;
+    }
+    
+    /* Radio options styling */
+    .radio-options {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .radio-options li {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        margin-bottom: 10px;
+        background-color: #fafafa;
+        border: 2px solid #e0e0e0;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .radio-options li:hover {
+        background-color: #f0f0f0;
+        border-color: #000000;
+    }
+    
+    .radio-options input[type="radio"] {
+        margin-right: 12px;
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+        pointer-events: none;
+    }
+    
+    .radio-options label {
+        cursor: pointer;
+        flex: 1;
+        margin: 0;
+        font-size: 16px;
+        color: #000000;
+    }
+    
+    /* Horizontal radio for importance scale */
+    .importance-scale {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: 15px;
+        gap: 10px;
+    }
+    
+    .importance-scale .scale-option {
+        flex: 1;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .importance-scale input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        margin-bottom: 8px;
+    }
+    
+    .importance-scale label {
+        font-size: 14px;
+        color: #000000;
+        cursor: pointer;
+        text-align: center;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .scale-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    
+    .submit-container {
+        text-align: center;
+        margin-top: 35px;
+    }
+    
+    .otree-btn-next {
+        background: #000000 !important;
+        color: white !important;
+        border: none !important;
+        padding: 18px 50px !important;
+        font-size: 18px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+    }
+    
+    .otree-btn-next:hover {
+        background: #333333 !important;
+        transform: translateY(-2px);
+    }
+    
+    @media (max-width: 768px) {
+        .demographics-container {
+            padding: 40px 30px;
+        }
+        
+        .demographics-title {
+            font-size: 26px;
+        }
+        
+        .question-text {
+            font-size: 16px;
+        }
+        
+        .dropdown-container select {
+            width: 100%;
+        }
+        
+        .dropdown-hint {
+            display: block;
+            margin-left: 0;
+            margin-top: 8px;
+        }
+        
+        .importance-scale {
+            flex-wrap: wrap;
+        }
+        
+        .importance-scale .scale-option {
+            flex: 0 0 14%;
+        }
+        
+        .importance-scale label {
+            font-size: 12px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .demographics-container {
+            padding: 30px 20px;
+        }
+        
+        .demographics-title {
+            font-size: 22px;
+        }
+        
+        .question-text {
+            font-size: 15px;
+        }
+        
+        .radio-options li {
+            padding: 10px 12px;
+        }
+        
+        .radio-options label {
+            font-size: 14px;
+        }
+        
+        .otree-btn-next {
+            width: 100%;
+            padding: 15px 30px !important;
+        }
+    }
+</style>
+
+<div class="demographics-container">
+    <div class="demographics-title">DEMOGRAPHIC QUESTIONNAIRE</div>
+    
+    <!-- Question 1: Birth Year -->
+    <div class="question-block">
+        <div class="question-text">(1) What is your year of birth?</div>
+        <div class="dropdown-container">
+            {{ formfield 'birth_year' }}
+        </div>
+    </div>
+    
+    <!-- Question 2: Gender -->
+    <div class="question-block">
+        <div class="question-text">(2) What is your gender?</div>
+        <ul class="radio-options">
+            <li onclick="document.getElementById('id_gender_0').checked = true;">
+                <input type="radio" name="gender" value="male" id="id_gender_0" required>
+                <label for="id_gender_0">Male</label>
+            </li>
+            <li onclick="document.getElementById('id_gender_1').checked = true;">
+                <input type="radio" name="gender" value="female" id="id_gender_1" required>
+                <label for="id_gender_1">Female</label>
+            </li>
+            <li onclick="document.getElementById('id_gender_2').checked = true;">
+                <input type="radio" name="gender" value="other" id="id_gender_2" required>
+                <label for="id_gender_2">Other</label>
+            </li>
+            <li onclick="document.getElementById('id_gender_3').checked = true;">
+                <input type="radio" name="gender" value="prefer_not" id="id_gender_3" required>
+                <label for="id_gender_3">Prefer not to say</label>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Question 3: Ethnicity -->
+    <div class="question-block">
+        <div class="question-text">(3) Which of the following options best describes your ethnic background?</div>
+        <ul class="radio-options">
+            <li onclick="document.getElementById('id_ethnicity_0').checked = true;">
+                <input type="radio" name="ethnicity" value="asian" id="id_ethnicity_0" required>
+                <label for="id_ethnicity_0">Asian</label>
+            </li>
+            <li onclick="document.getElementById('id_ethnicity_1').checked = true;">
+                <input type="radio" name="ethnicity" value="european" id="id_ethnicity_1" required>
+                <label for="id_ethnicity_1">European</label>
+            </li>
+            <li onclick="document.getElementById('id_ethnicity_2').checked = true;">
+                <input type="radio" name="ethnicity" value="african" id="id_ethnicity_2" required>
+                <label for="id_ethnicity_2">African</label>
+            </li>
+            <li onclick="document.getElementById('id_ethnicity_3').checked = true;">
+                <input type="radio" name="ethnicity" value="american" id="id_ethnicity_3" required>
+                <label for="id_ethnicity_3">American</label>
+            </li>
+            <li onclick="document.getElementById('id_ethnicity_4').checked = true;">
+                <input type="radio" name="ethnicity" value="latin_american" id="id_ethnicity_4" required>
+                <label for="id_ethnicity_4">Latin American</label>
+            </li>
+            <li onclick="document.getElementById('id_ethnicity_5').checked = true;">
+                <input type="radio" name="ethnicity" value="mixed" id="id_ethnicity_5" required>
+                <label for="id_ethnicity_5">Mixed background</label>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Question 4: Educational Status -->
+    <div class="question-block">
+        <div class="question-text">(4) Which of the following options best describes your current educational status?</div>
+        <ul class="radio-options">
+            <li onclick="document.getElementById('id_education_status_0').checked = true;">
+                <input type="radio" name="education_status" value="first_year" id="id_education_status_0" required>
+                <label for="id_education_status_0">First-year undergraduate student</label>
+            </li>
+            <li onclick="document.getElementById('id_education_status_1').checked = true;">
+                <input type="radio" name="education_status" value="second_year" id="id_education_status_1" required>
+                <label for="id_education_status_1">Second-year undergraduate student</label>
+            </li>
+            <li onclick="document.getElementById('id_education_status_2').checked = true;">
+                <input type="radio" name="education_status" value="third_final" id="id_education_status_2" required>
+                <label for="id_education_status_2">Third-year/final-year undergraduate student</label>
+            </li>
+            <li onclick="document.getElementById('id_education_status_3').checked = true;">
+                <input type="radio" name="education_status" value="masters" id="id_education_status_3" required>
+                <label for="id_education_status_3">Masters student</label>
+            </li>
+            <li onclick="document.getElementById('id_education_status_4').checked = true;">
+                <input type="radio" name="education_status" value="doctoral" id="id_education_status_4" required>
+                <label for="id_education_status_4">Doctoral/PhD student</label>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Question 5: SCR Importance -->
+    <div class="question-block">
+        <div class="question-text">(5) Please indicate the extent to which you think Supply Chain Resilience (or Supply Chain Risk Management) is important nowadays?</div>
+        <div class="importance-scale">
+            <div class="scale-option">
+                <input type="radio" name="scr_importance" value="1" id="id_scr_importance_0" required>
+                <label for="id_scr_importance_0">Not important</label>
+            </div>
+            <div class="scale-option">
+                <input type="radio" name="scr_importance" value="2" id="id_scr_importance_1" required>
+                <label for="id_scr_importance_1">&nbsp;</label>
+            </div>
+            <div class="scale-option">
+                <input type="radio" name="scr_importance" value="3" id="id_scr_importance_2" required>
+                <label for="id_scr_importance_2">&nbsp;</label>
+            </div>
+            <div class="scale-option">
+                <input type="radio" name="scr_importance" value="4" id="id_scr_importance_3" required>
+                <label for="id_scr_importance_3">Moderately important</label>
+            </div>
+            <div class="scale-option">
+                <input type="radio" name="scr_importance" value="5" id="id_scr_importance_4" required>
+                <label for="id_scr_importance_4">&nbsp;</label>
+            </div>
+            <div class="scale-option">
+                <input type="radio" name="scr_importance" value="6" id="id_scr_importance_5" required>
+                <label for="id_scr_importance_5">&nbsp;</label>
+            </div>
+            <div class="scale-option">
+                <input type="radio" name="scr_importance" value="7" id="id_scr_importance_6" required>
+                <label for="id_scr_importance_6">Really important</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="submit-container">
+        {{ next_button }}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const formFields = document.querySelectorAll('.form-group');
+        formFields.forEach(field => {
+            if (field.querySelector('select[name="birth_year"]') ||
+                field.querySelector('input[name="gender"]') ||
+                field.querySelector('input[name="ethnicity"]') ||
+                field.querySelector('input[name="education_status"]') ||
+                field.querySelector('input[name="scr_importance"]')) {
+                field.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+{{ endblock }}

@@ -1,0 +1,213 @@
+{{ block content }}
+
+<style>
+    .otree-title {
+        display: none !important;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .otree-body {
+        margin-top: 0;
+        margin-bottom: 0;
+        max-width: 100%;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #F5F5F5;
+        padding: 10px;
+    }
+
+    .results-container {
+        background-color: #FFFFFF;
+        border: 3px solid #000000;
+        border-radius: 0;
+        padding: 60px 80px;
+        max-width: 900px;
+        width: 100%;
+        text-align: center;
+        margin: 50px auto;
+    }
+
+    .results-title {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 50px;
+        color: #000000;
+        letter-spacing: 2px;
+    }
+
+    .results-section {
+        margin-bottom: 80px;
+    }
+
+    .result-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 25px 0;
+        font-size: 20px;
+        padding: 0 80px;
+        gap: 50px;
+    }
+
+    .result-label {
+        text-align: left;
+        color: #000000;
+        flex: 1;
+    }
+
+    .result-value {
+        text-align: right;
+        font-weight: normal;
+        color: #000000;
+        flex: 0 0 auto;
+    }
+
+    .payment-section {
+        margin-top: 80px;
+    }
+
+    .payment-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: #000000;
+        letter-spacing: 1px;
+    }
+
+    .payment-row {
+        font-size: 20px;
+        margin: 20px 0;
+        color: #000000;
+    }
+
+    .payment-total {
+        font-size: 22px;
+        font-weight: bold;
+        margin-top: 30px;
+        color: #000000;
+    }
+
+    .thank-you {
+        font-size: 22px;
+        font-weight: bold;
+        margin-top: 80px;
+        color: #000000;
+        letter-spacing: 1px;
+    }
+
+    .button-container {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .otree-btn-next {
+        background: #000000 !important;
+        color: white !important;
+        border: none !important;
+        padding: 18px 50px !important;
+        font-size: 18px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+    }
+
+    .otree-btn-next:hover {
+        background: #333333 !important;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .results-container {
+            padding: 40px 30px;
+        }
+
+        .results-title {
+            font-size: 26px;
+        }
+
+        .result-row {
+            font-size: 18px;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .result-label,
+        .result-value {
+            text-align: center;
+        }
+
+        .payment-title {
+            font-size: 24px;
+        }
+
+        .payment-row,
+        .payment-total {
+            font-size: 18px;
+        }
+
+        .thank-you {
+            font-size: 22px;
+        }
+    }
+</style>
+
+<div class="results-container">
+    <div class="results-title">YOUR PERFORMANCE</div>
+
+    <div class="results-section">
+        <div class="result-row">
+            <div class="result-label">Number of disruptions happened:</div>
+            <div class="result-value">{{ num_disruptions }}</div>
+        </div>
+
+        <div class="result-row">
+            <div class="result-label">The loss due to disruptions:</div>
+            <div class="result-value">{{ total_disruption_cost }} (ECU)</div>
+        </div>
+
+        <div class="result-row">
+            <div class="result-label">The cost of SC resilience:</div>
+            <div class="result-value">{{ total_spending }} (ECU)</div>
+        </div>
+
+        <div class="result-row">
+            <div class="result-label">The final profit:</div>
+            <div class="result-value">{{ final_profit }} (ECU)</div>
+        </div>
+    </div>
+
+    <div class="payment-section">
+        <div class="payment-title">YOUR CURRENT PAYMENT</div>
+
+        <div class="payment-row">
+            Show-up fee: {{ show_up_fee }} €
+        </div>
+
+        <div class="payment-row">
+            Pay-off based on your final profit: {{ performance_payment }} €
+        </div>
+
+        <div class="payment-total">
+            Your total money earned: {{ total_payment }} €
+        </div>
+    </div>
+
+    <div class="thank-you">
+        Money will be paid once you complete the two extra tasks (plus a short demographic questionnaire) on the next pages, for which you have the opportunity to earn more money, in addition to this payment!
+    </div>
+</div>
+
+<div class="button-container">
+    {{ next_button }}
+</div>
+
+{{ endblock }}

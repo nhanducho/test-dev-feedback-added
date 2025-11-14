@@ -1,0 +1,170 @@
+{{ block content }}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+    .otree-body {
+        max-width: 1500px;
+        margin: 0 auto;
+    }
+    .task-container {
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 30px;
+        margin: 20px 0;
+    }
+    h2 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
+    }
+    .instructions {
+        line-height: 1.5;
+        margin-bottom: 15px;
+        text-align: justify;
+        color: #333;
+    }
+    table {
+        width: 70%;
+        border-collapse: collapse;
+        margin: 30px auto;
+        background-color: white;
+    }
+    th, td {
+        border: 1px solid #333;
+        padding: 12px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    th {
+        background-color: #e8e8e8;
+        font-weight: bold;
+        color: #333;
+    }
+    .gamble-col {
+        width: 80px;
+        background-color: #e8e8e8;
+        font-weight: bold;
+    }
+    .description-col {
+        text-align: center;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .choice-header {
+        background-color: #e8e8e8;
+        font-weight: bold;
+        width: 80px;
+    }
+    .radio-col {
+        width: 80px;
+        background-color: #fff;
+    }
+    input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+    .otree-btn-next {
+        background: #000000 !important;
+        color: white !important;
+        border: none !important;
+        padding: 12px 36px !important;
+        font-size: 18px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+    }
+
+    .otree-btn-next:hover {
+        background: #333333 !important;
+        transform: translateY(-2px);
+    }
+    .submit-container {
+        text-align: right;
+        margin-top: 30px;
+    }
+
+    /* Hide default form fields */
+    .form-group {
+        display: none !important;
+    }
+</style>
+
+<div class="task-container">
+    <h2>Task 2</h2>
+
+    <div class="instructions">
+        <p>In the table below, you will find the lists of 6 different gambles with different chances of winning and losing money. Your task is to decide whether to “Accept” or “Reject” to play in each gamble.</p>
+
+        <p>After completing the task, the computer will randomly select 1 out of these 6 gambles to determine your potential outcome, depending on your choice, either to accept or reject. For example, your choice is “Accept” in gamble number 5, and the randomized result is gamble number 5; in this case, you have a 50% probability of winning 6000 ECU and a 50% probability of losing 6000 ECU, which will be drawn randomly by the computer and displayed in the screen. If you win, 6000 ECU will be added to your current final payoff, using the same conversion rate from ECU to Euro. Conversely, if you lose, 6000 ECU will be converted to Euros and deducted from extra tasks' payoff, which affects your final payment at the end of the experiment.</p>
+
+        <p>Each gamble has an equal chance of being chosen in the end. As the result of this gambling task will influence your final payment, it is advisable to think carefully about whether or not to play in every single gamble that will maximize your chances of earning more money.</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="gamble-col">Gamble</th>
+                <th class="description-col">Description</th>
+                <th class="choice-header">Accept</th>
+                <th class="choice-header">Reject</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="gamble-col">1</td>
+                <td class="description-col"><strong>50%</strong> probability of <strong>losing 2000 ECU</strong>, <strong>50%</strong> probability of <strong>winning 6000 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task2_g1" value="Accept" id="id_task2_g1_Accept" required></td>
+                <td class="radio-col"><input type="radio" name="task2_g1" value="Reject" id="id_task2_g1_Reject" required></td>
+            </tr>
+
+            <tr>
+                <td class="gamble-col">2</td>
+                <td class="description-col"><strong>50%</strong> probability of <strong>losing 3000 ECU</strong>, <strong>50%</strong> probability of <strong>winning 6000 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task2_g2" value="Accept" id="id_task2_g2_Accept" required></td>
+                <td class="radio-col"><input type="radio" name="task2_g2" value="Reject" id="id_task2_g2_Reject" required></td>
+            </tr>
+
+            <tr>
+                <td class="gamble-col">3</td>
+                <td class="description-col"><strong>50%</strong> probability of <strong>losing 4000 ECU</strong>, <strong>50%</strong> probability of <strong>winning 6000 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task2_g3" value="Accept" id="id_task2_g3_Accept" required></td>
+                <td class="radio-col"><input type="radio" name="task2_g3" value="Reject" id="id_task2_g3_Reject" required></td>
+            </tr>
+
+            <tr>
+                <td class="gamble-col">4</td>
+                <td class="description-col"><strong>50%</strong> probability of <strong>losing 5000 ECU</strong>, <strong>50%</strong> probability of <strong>winning 6000 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task2_g4" value="Accept" id="id_task2_g4_Accept" required></td>
+                <td class="radio-col"><input type="radio" name="task2_g4" value="Reject" id="id_task2_g4_Reject" required></td>
+            </tr>
+
+            <tr>
+                <td class="gamble-col">5</td>
+                <td class="description-col"><strong>50%</strong> probability of <strong>losing 6000 ECU</strong>, <strong>50%</strong> probability of <strong>winning 6000 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task2_g5" value="Accept" id="id_task2_g5_Accept" required></td>
+                <td class="radio-col"><input type="radio" name="task2_g5" value="Reject" id="id_task2_g5_Reject" required></td>
+            </tr>
+
+            <tr>
+                <td class="gamble-col">6</td>
+                <td class="description-col"><strong>50%</strong> probability of <strong>losing 7000 ECU</strong>, <strong>50%</strong> probability of <strong>winning 6000 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task2_g6" value="Accept" id="id_task2_g6_Accept" required></td>
+                <td class="radio-col"><input type="radio" name="task2_g6" value="Reject" id="id_task2_g6_Reject" required></td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div class="submit-container">
+        {{ next_button label="Submit" class="btn btn-primary" }}
+    </div>
+</div>
+
+{{ endblock }}

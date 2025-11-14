@@ -1,0 +1,323 @@
+{{ block content }}
+
+<style>
+    .otree-title {
+        display: none !important;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .otree-body {
+        max-width: 100%;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #F5F5F5;
+        padding: 20px;
+    }
+
+    /* Hide the default otree error message at the top */
+    .alert-danger {
+        display: none !important;
+    }
+
+    /* Hide all default error displays */
+    .has-error {
+        border-color: #e0e0e0 !important;
+    }
+
+    .question-container {
+        background-color: #FFFFFF;
+        border: 3px solid #000000;
+        border-radius: 0;
+        padding: 40px 60px;
+        max-width: 1000px;
+        width: 100%;
+        margin: 30px auto;
+    }
+
+    .question-title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: #000000;
+        letter-spacing: 2px;
+        text-align: center;
+    }
+
+    .instruction {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #000000;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .error-message {
+        background-color: #ffebee;
+        border: 2px solid #c62828;
+        color: #c62828;
+        padding: 15px 20px;
+        margin-bottom: 25px;
+        font-size: 16px;
+        font-weight: normal;
+        text-align: center;
+    }
+
+    .question-block {
+        margin-bottom: 30px;
+        padding-bottom: 25px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+
+    .question-block:last-of-type {
+        border-bottom: none;
+    }
+
+    .question-text {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #000000;
+    }
+
+    .question-options {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .question-options li {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        margin-bottom: 10px;
+        background-color: #fafafa;
+        border: 2px solid #e0e0e0;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+    }
+
+    .question-options li input[type="radio"] {
+        pointer-events: none;
+    }
+
+    .question-options li:hover {
+        background-color: #f0f0f0;
+        border-color: #000000;
+    }
+
+    .question-options input[type="radio"] {
+        margin-right: 12px;
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+    }
+
+    .question-options label {
+        cursor: pointer;
+        flex: 1;
+        margin: 0;
+        font-size: 16px;
+        color: #000000;
+    }
+
+    .submit-container {
+        text-align: center;
+        margin-top: 35px;
+    }
+
+    .otree-btn-next {
+        background: #000000 !important;
+        color: white !important;
+        border: none !important;
+        padding: 18px 50px !important;
+        font-size: 18px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+    }
+
+    .otree-btn-next:hover {
+        background: #333333 !important;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .question-container {
+            padding: 40px 30px;
+        }
+
+        .question-title {
+            font-size: 26px;
+        }
+
+        .instruction,
+        .question-text {
+            font-size: 16px;
+        }
+
+        .question-options label {
+            font-size: 15px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .question-container {
+            padding: 30px 20px;
+        }
+
+        .question-title {
+            font-size: 22px;
+        }
+
+        .instruction,
+        .question-text {
+            font-size: 15px;
+        }
+
+        .question-options li {
+            padding: 10px 12px;
+        }
+
+        .question-options label {
+            font-size: 14px;
+        }
+
+        .otree-btn-next {
+            width: 100%;
+            padding: 15px 30px !important;
+        }
+    }
+</style>
+
+<div class="question-container">
+    <div class="question-title">COMPREHENSION QUESTIONS</div>
+
+    <div class="instruction">
+        Please answer all 5 questions below. You must answer all questions correctly to continue.
+        <br><strong>Attempt {{ attempt_number }}</strong>
+    </div>
+
+    {{ if form.errors }}
+        {{ if form.errors.__all__ }}
+        <div class="error-message">
+            {{ form.errors.__all__ }}
+        </div>
+        {{ endif }}
+    {{ endif }}
+
+    <div class="question-block">
+        <div class="question-text">1. {{ questions.0.question }}</div>
+        <ul class="question-options">
+            <li onclick="document.getElementById('q1_a').checked = true;">
+                <input type="radio" name="comp_q1" value="a" id="q1_a">
+                <label for="q1_a">{{ questions.0.options.a }}</label>
+            </li>
+            <li onclick="document.getElementById('q1_b').checked = true;">
+                <input type="radio" name="comp_q1" value="b" id="q1_b">
+                <label for="q1_b">{{ questions.0.options.b }}</label>
+            </li>
+            {% if 'c' in questions.0.options %}
+            <li onclick="document.getElementById('q1_c').checked = true;">
+                <input type="radio" name="comp_q1" value="c" id="q1_c">
+                <label for="q1_c">{{ questions.0.options.c }}</label>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="question-block">
+        <div class="question-text">2. {{ questions.1.question }}</div>
+        <ul class="question-options">
+            <li onclick="document.getElementById('q2_a').checked = true;">
+                <input type="radio" name="comp_q2" value="a" id="q2_a">
+                <label for="q2_a">{{ questions.1.options.a }}</label>
+            </li>
+            <li onclick="document.getElementById('q2_b').checked = true;">
+                <input type="radio" name="comp_q2" value="b" id="q2_b">
+                <label for="q2_b">{{ questions.1.options.b }}</label>
+            </li>
+            {% if 'c' in questions.1.options %}
+            <li onclick="document.getElementById('q2_c').checked = true;">
+                <input type="radio" name="comp_q2" value="c" id="q2_c">
+                <label for="q2_c">{{ questions.1.options.c }}</label>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="question-block">
+        <div class="question-text">3. {{ questions.2.question }}</div>
+        <ul class="question-options">
+            <li onclick="document.getElementById('q3_a').checked = true;">
+                <input type="radio" name="comp_q3" value="a" id="q3_a">
+                <label for="q3_a">{{ questions.2.options.a }}</label>
+            </li>
+            <li onclick="document.getElementById('q3_b').checked = true;">
+                <input type="radio" name="comp_q3" value="b" id="q3_b">
+                <label for="q3_b">{{ questions.2.options.b }}</label>
+            </li>
+            {% if 'c' in questions.2.options %}
+            <li onclick="document.getElementById('q3_c').checked = true;">
+                <input type="radio" name="comp_q3" value="c" id="q3_c">
+                <label for="q3_c">{{ questions.2.options.c }}</label>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="question-block">
+        <div class="question-text">4. {{ questions.3.question }}</div>
+        <ul class="question-options">
+            <li onclick="document.getElementById('q4_a').checked = true;">
+                <input type="radio" name="comp_q4" value="a" id="q4_a">
+                <label for="q4_a">{{ questions.3.options.a }}</label>
+            </li>
+            <li onclick="document.getElementById('q4_b').checked = true;">
+                <input type="radio" name="comp_q4" value="b" id="q4_b">
+                <label for="q4_b">{{ questions.3.options.b }}</label>
+            </li>
+            {% if 'c' in questions.3.options %}
+            <li onclick="document.getElementById('q4_c').checked = true;">
+                <input type="radio" name="comp_q4" value="c" id="q4_c">
+                <label for="q4_c">{{ questions.3.options.c }}</label>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="question-block">
+        <div class="question-text">5. {{ questions.4.question }}</div>
+        <ul class="question-options">
+            <li onclick="document.getElementById('q5_a').checked = true;">
+                <input type="radio" name="comp_q5" value="a" id="q5_a">
+                <label for="q5_a">{{ questions.4.options.a }}</label>
+            </li>
+            <li onclick="document.getElementById('q5_b').checked = true;">
+                <input type="radio" name="comp_q5" value="b" id="q5_b">
+                <label for="q5_b">{{ questions.4.options.b }}</label>
+            </li>
+            {% if 'c' in questions.4.options %}
+            <li onclick="document.getElementById('q5_c').checked = true;">
+                <input type="radio" name="comp_q5" value="c" id="q5_c">
+                <label for="q5_c">{{ questions.4.options.c }}</label>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="submit-container">
+        {{ next_button }}
+    </div>
+</div>
+
+{{ endblock }}

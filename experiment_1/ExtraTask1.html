@@ -1,0 +1,214 @@
+{{ block content }}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+    .otree-body {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    .task-container {
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 30px;
+        margin: 20px 0;
+    }
+    h2 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
+    }
+    .instructions {
+        line-height: 1.5;
+        margin-bottom: 15px;
+        text-align: justify;
+        color: #333;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 30px 0;
+        background-color: white;
+    }
+    th, td {
+        border: 1px solid #333;
+        padding: 12px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    th {
+        background-color: #e8e8e8;
+        font-weight: bold;
+        color: #333;
+    }
+    .decision-col {
+        width: 60px;
+        background-color: #e8e8e8;
+        font-weight: bold;
+    }
+    .option-col1 {
+        width: 27%;
+        text-align: center;
+        padding-left: 20px;
+    }
+    .option-col2 {
+        width: 43%;
+        text-align: center;
+        padding-left: 20px;
+    }
+    .choice-header {
+        background-color: #e8e8e8;
+        font-weight: bold;
+        width: 160px;
+        text-align: center;
+    }
+    .choice-subheader {
+        background-color: #e8e8e8;
+        font-weight: bold;
+        width: 80px;
+        text-align: center;
+    }
+    .radio-col {
+        width: 80px;
+        background-color: #fff;
+    }
+    input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+    .otree-btn-next {
+        background: #000000 !important;
+        color: white !important;
+        border: none !important;
+        padding: 12px 36px !important;
+        font-size: 18px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+    }
+
+    .otree-btn-next:hover {
+        background: #333333 !important;
+        transform: translateY(-2px);
+    }
+    .submit-container {
+        text-align: right;
+        margin-top: 30px;
+    }
+
+    /* Hide default form fields */
+    .form-group {
+        display: none !important;
+    }
+</style>
+
+<div class="task-container">
+    <h2>Task 1</h2>
+
+    <div class="instructions">
+        <p>The task below contains 10 different decisions, in each of which you need to make your choices by selecting either Option A or Option B.</p>
+
+        <p>After completing the task, the computer will randomly select 1 out of these 10 decisions to determine your potential payoff based on the choice you made in that decision, Option A or Option B. For example, your choice is Option B in decision number 4, and the randomized result is decision number 4; in this case, you have a 40% chance of earning 1750 ECU, added to your extra tasks' payoff; otherwise, you earn nothing.</p>
+
+        <p>Each decision has an equal chance of being chosen in the end. You are advised to consider carefully when making your choices so that you have a better chance of earning a higher <strong>payoff</strong> in this task.</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2" class="decision-col">Decision</th>
+                <th rowspan="2" class="option-col1">Option A</th>
+                <th rowspan="2" class="option-col2">Option B</th>
+                <th colspan="2" class="choice-header">Your choice</th>
+            </tr>
+            <tr>
+                <th class="choice-subheader">Option A</th>
+                <th class="choice-subheader">Option B</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="decision-col">1</td>
+                <td class="option-col1"><strong>100%</strong> probability of <strong>750 ECU</strong></td>
+                <td class="option-col2"><strong>10%</strong> probability of <strong>1750 ECU</strong>, <strong>90%</strong> probability of <strong>0 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task1_d1" value="A" id="id_task1_d1_a" required></td>
+                <td class="radio-col"><input type="radio" name="task1_d1" value="B" id="id_task1_d1_b" required></td>
+            </tr>
+            <tr>
+                <td class="decision-col">2</td>
+                <td class="option-col1"><strong>100%</strong> probability of <strong>750 ECU</strong></td>
+                <td class="option-col2"><strong>20%</strong> probability of <strong>1750 ECU</strong>, <strong>80%</strong> probability of <strong>0 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task1_d2" value="A" id="id_task1_d2_a" required></td>
+                <td class="radio-col"><input type="radio" name="task1_d2" value="B" id="id_task1_d2_b" required></td>
+            </tr>
+            <tr>
+                <td class="decision-col">3</td>
+                <td class="option-col1"><strong>100%</strong> probability of <strong>750 ECU</strong></td>
+                <td class="option-col2"><strong>30%</strong> probability of <strong>1750 ECU</strong>, <strong>70%</strong> probability of <strong>0 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task1_d3" value="A" id="id_task1_d3_a" required></td>
+                <td class="radio-col"><input type="radio" name="task1_d3" value="B" id="id_task1_d3_b" required></td>
+            </tr>
+            <tr>
+                <td class="decision-col">4</td>
+                <td class="option-col1"><strong>100%</strong> probability of <strong>750 ECU</strong></td>
+                <td class="option-col2"><strong>40%</strong> probability of <strong>1750 ECU</strong>, <strong>60%</strong> probability of <strong>0 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task1_d4" value="A" id="id_task1_d4_a" required></td>
+                <td class="radio-col"><input type="radio" name="task1_d4" value="B" id="id_task1_d4_b" required></td>
+            </tr>
+            <tr>
+                <td class="decision-col">5</td>
+                <td class="option-col1"><strong>100%</strong> probability of <strong>750 ECU</strong></td>
+                <td class="option-col2"><strong>50%</strong> probability of <strong>1750 ECU</strong>, <strong>50%</strong> probability of <strong>0 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task1_d5" value="A" id="id_task1_d5_a" required></td>
+                <td class="radio-col"><input type="radio" name="task1_d5" value="B" id="id_task1_d5_b" required></td>
+            </tr>
+            <tr>
+                <td class="decision-col">6</td>
+                <td class="option-col1"><strong>100%</strong> probability of <strong>750 ECU</strong></td>
+                <td class="option-col2"><strong>60%</strong> probability of <strong>1750 ECU</strong>, <strong>40%</strong> probability of <strong>0 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task1_d6" value="A" id="id_task1_d6_a" required></td>
+                <td class="radio-col"><input type="radio" name="task1_d6" value="B" id="id_task1_d6_b" required></td>
+            </tr>
+            <tr>
+                <td class="decision-col">7</td>
+                <td class="option-col1"><strong>100%</strong> probability of <strong>750 ECU</strong></td>
+                <td class="option-col2"><strong>70%</strong> probability of <strong>1750 ECU</strong>, <strong>30%</strong> probability of <strong>0 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task1_d7" value="A" id="id_task1_d7_a" required></td>
+                <td class="radio-col"><input type="radio" name="task1_d7" value="B" id="id_task1_d7_b" required></td>
+            </tr>
+            <tr>
+                <td class="decision-col">8</td>
+                <td class="option-col1"><strong>100%</strong> probability of <strong>750 ECU</strong></td>
+                <td class="option-col2"><strong>80%</strong> probability of <strong>1750 ECU</strong>, <strong>20%</strong> probability of <strong>0 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task1_d8" value="A" id="id_task1_d8_a" required></td>
+                <td class="radio-col"><input type="radio" name="task1_d8" value="B" id="id_task1_d8_b" required></td>
+            </tr>
+            <tr>
+                <td class="decision-col">9</td>
+                <td class="option-col1"><strong>100%</strong> probability of <strong>750 ECU</strong></td>
+                <td class="option-col2"><strong>90%</strong> probability of <strong>1750 ECU</strong>, <strong>10%</strong> probability of <strong>0 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task1_d9" value="A" id="id_task1_d9_a" required></td>
+                <td class="radio-col"><input type="radio" name="task1_d9" value="B" id="id_task1_d9_b" required></td>
+            </tr>
+            <tr>
+                <td class="decision-col">10</td>
+                <td class="option-col1"><strong>100%</strong> probability of <strong>750 ECU</strong></td>
+                <td class="option-col2"><strong>100%</strong> probability of <strong>1750 ECU</strong>, <strong>0%</strong> probability of <strong>0 ECU</strong></td>
+                <td class="radio-col"><input type="radio" name="task1_d10" value="A" id="id_task1_d10_a" required></td>
+                <td class="radio-col"><input type="radio" name="task1_d10" value="B" id="id_task1_d10_b" required></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="submit-container">
+        {{ next_button label="Submit" class="btn btn-primary" }}
+    </div>
+</div>
+
+{{ endblock }}

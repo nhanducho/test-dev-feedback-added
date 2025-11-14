@@ -1,0 +1,216 @@
+{{ block content }}
+
+<style>
+        .otree-title {
+            display: none !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .otree-body {
+            max-width: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            padding: 20px;
+        }
+
+        .welcoming-container {
+            background-color: #FFFFFF;
+            border: 3px solid #000000;
+            border-radius: 0;
+            padding: 40px 60px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 30px auto;
+        }
+
+        .welcoming-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #000000;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .content-section {
+            margin-bottom: 25px;
+        }
+
+        .content-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #000000;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .highlight {
+            font-weight: bold;
+        }
+
+        .start-btn-container {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        .otree-btn-next {
+            background: #000000 !important;
+            color: white !important;
+            border: none !important;
+            padding: 18px 50px !important;
+            font-size: 18px !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+        }
+
+        .otree-btn-next:hover {
+            background: #333333 !important;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .welcoming-container {
+                padding: 40px 30px;
+            }
+
+            .welcoming-title {
+                font-size: 26px;
+                margin-bottom: 30px;
+            }
+
+            .content-text {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+
+            .otree-btn-next {
+                padding: 15px 40px !important;
+                font-size: 16px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcoming-container {
+                padding: 30px 20px;
+            }
+
+            .welcoming-title {
+                font-size: 22px;
+            }
+
+            .content-text {
+                font-size: 15px;
+            }
+
+            .otree-btn-next {
+                width: 100%;
+                padding: 15px 30px !important;
+                font-size: 15px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcoming-container">
+        <div class="welcoming-title">WELCOME TO THE SUPPLY CHAIN RISK MANAGEMENT EXPERIMENT</div>
+
+        <div class="content-section">
+            <p class="content-text" style="text-align: center;">
+                <span class="highlight">Instructions</span>
+            </p>
+            <p class="content-text">
+                This game is an experiment about decision-making in supply chain risk management. The instructions are simple, and if you read them carefully and make good decisions, you could earn a considerable amount of money which will be paid to you in cash at the end of the experiment. To ensure that the instructions are clear and understandable, you are asked to answer a couple of multiple-choice questions on the next page. The real experiment will proceed once you complete all questions correctly. During the experiment, you are not allowed to make noise or talk to other participants. The first violation of this rule will result in a warning, and the second violation will result in immediate termination of participation; in this case, your earnings will be 0. If you have any questions during the experiment, please notify the instructor to receive the support needed.
+            </p>
+
+            <p class="content-text" style="text-align: center;">
+                <span class="highlight">Experiment Description</span>
+            </p>
+            <p class="content-text">
+                In this experiment, you will be playing the role of an executive manager of a corporation. As the global supply chain has become increasingly unstable over the last decade, your firm is constantly exposed to the risks of supply chain disruption (hereafter SC disruption). Without proper preparation, you risk incurring substantial costs when disruptions occur due to unfulfilled orders, operational breakdowns, and damaged reputation. To forestall disruptions and minimize their impact on your business, you are advised by the supply chain manager to allocate sufficient resources to enhance the resilience of your supply chain (e.g., diversifying suppliers, maintaining inventory buffers, implementing state-of-the-art technologies, or reallocating manufacturing facilities). In each round of this experiment, your task is to decide how much money to allocate for building and maintaining supply chain resilience (hereafter SC resilience). There will be 100 rounds in total. In every new round, you will earn a fixed gross profit of 100 ECU (Experimental Currency Unit), which you can use to spend on SC resilience. The detailed experimental procedure and rules are explained below.
+            </p>
+
+            <p class="content-text" style="text-align: center;">
+                <span class="highlight">Experimental Procedure</span>
+            </p>
+            <p class="content-text">
+                You will play a game in which you need to make decisions in each of 100 identical rounds:
+            </p>
+            <p class="content-text">
+                • At the beginning of each round, you will certainly earn 100 ECU of gross profit (i.e., the amount of money after deducting all direct and indirect costs except for SC resilience spending cost). You need to determine how much to spend on SC resilience; you are free to insert your spending decision <b>between 0 and 100 ECU</b>.
+            </p>
+            <p class="content-text">
+                • Once you submit your decision, the computer will automatically generate whether a disruption happens and the disruption-related cost you incur in the current round.
+            </p>
+            <p class="content-text">
+                • Your net profit in each round will be computed and provided in the performance table. There are two different scenarios:
+            </p>
+            <p class="content-text" style="margin-left: 40px;">
+                ○ If there is no disruption, your net profit will be:<br>
+                <span class="highlight">
+                    Net Profit = Gross Profit – SC Resilience Spending
+                </span>
+            </p>
+            <p class="content-text" style="margin-left: 40px;">
+                ○ If there is a disruption, your net profit will be:<br>
+                <span class="highlight">
+                    Net Profit = Gross Profit – SC Resilience Spending – Disruption-related Cost
+                </span>
+            </p>
+            <p class="content-text">
+                • Your accumulated net profit after 100 rounds will determine your final performance in the game. This performance will be converted to your actual payoff, added to your show-up fee.
+            </p>
+
+            <p class="content-text" style="text-align: center;">
+                <span class="highlight">Supply Chain Disruptions</span>
+            </p>
+            <p class="content-text">
+                Your corporation is constantly at risk of being affected by supply chain disruptions (e.g., a flood in your factory, shipping route blockage, or political unrest). If your business is disrupted or indirectly affected by these adverse events (e.g., your suppliers are shut down and unable to fulfill their orders), you may fail to meet your customers' demands and consequently incur a substantial cost due to declining sales and losing customers to your competitors. For example, imagine your company has signed deals with various customers to supply them with products you produce, and these deals bring you 100 ECU of gross profit once all deals are fulfilled. Suppose you believe there will be no disruption in this round, so you decide not to spend anything on SC resilience. It turns out that you are right, which helps your company earn the largest possible net profit of 100 ECU. Alternatively, your speculation proves to be wrong, and your business is hit by a disruption. In this case, you cannot fulfill your customer obligations due to a zero-inventory buffer, "just-in-time" manufacturing, and consolidated procurement, resulting in the most significant costs for your company related to SC disruptions.
+            </p>
+            <p class="content-text">
+                <b>Disruptions are unpredictable, but you do know that without supply chain resilience (zero spending), the probability of a disruption occurring is 5% and it costs you 2000 ECU once a disruption occurs.</b> Keep in mind that the disruption occurring (or not) in one round is independent and does not influence the result of any other rounds.
+            </p>
+
+            <p class="content-text" style="text-align: center;">
+                <span class="highlight">How Supply Chain Resilience Spending Works</span>
+            </p>
+            <p class="content-text">
+                SC resilience is widely regarded as one of the best strategies that enables your company to proactively prepare for unforeseen disruptions. In this experiment, spending on SC resilience allows you to reduce both the probability and the financial impact of possible disruptions. The role is simple: the higher you spend on SC resilience, the lower the likelihood of disruptions occurring, as well as the lower the disruption-related costs if disruptions do happen. For example, if you decide to spend 20 ECU on SC resilience, the new probability of disruption occurring is now 4%, and the new impact in the event of disruption is 1600 ECU. You can also choose not to spend on SC resilience by inserting 0 ECU, meaning that you accept the disruption probability of 5% and the potential loss of 2000 ECU. Conversely, you can decide to spend up to a maximum of 100 ECU to eliminate all risks of SC disruptions (i.e., 0% disruption probability, 0 ECU of impact). During the experiment, a decision support tool is always available to help you calculate the revised probability and revised impact of disruptions based on your spending amount.
+            </p>
+
+            <p class="content-text" style="text-align: center;">
+                <span class="highlight">Your Objective</span>
+            </p>
+            <p class="content-text">
+                Your goal in this experiment is to maximize your profit by deciding the right amount to spend on SC resilience that serves you best in preventing SC disruptions, while not eating up your profit due to excessive spending. For example, suppose you expect a disruption to be likely to occur in this round, and you decide to spend two-thirds of your gross profit on SC resilience. Thanks to generous spending, you manage to avoid disruption this round, but your realized profit is only one-third of the gross profit.
+            </p>
+
+            <p class="content-text" style="text-align: center;">
+                <span class="highlight">Your Payment Determination</span>
+            </p>
+            <p class="content-text">
+                At the end of the experiment, your final profit that has been accumulated from the realized profits of each 100 rounds will be converted into Euros (€) at a rate of €1 per 1500 ECU. This performance pay-off will then be added to your show-up fee of €3 to determine your final earnings, which will be paid to you in cash after you complete two extra tasks, with which you have the chance of earning more money, and the final questionnaire, answering a few general questions.
+            </p>
+            <p class="content-text">
+                Please be aware that your final profit could be less than or equal to 0 if you incur substantial losses and/or excess spending. Should this be the case after 100 rounds of the experiment, your performance pay-off will be automatically set at €0, but your show-up fee of €3 will remain intact.
+            </p>
+        </div>
+
+        <div class="start-btn-container">
+            <button class="otree-btn-next">NEXT</button>
+        </div>
+    </div>
+
+{{ endblock }}
+
+
