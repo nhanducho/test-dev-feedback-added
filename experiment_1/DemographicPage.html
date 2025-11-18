@@ -1,4 +1,5 @@
 {{ block content }}
+
 <style>
     .otree-title {
         display: none !important;
@@ -56,6 +57,13 @@
         color: #000000;
     }
     
+    .optional-tag {
+        font-size: 14px;
+        font-weight: normal;
+        color: #666;
+        font-style: italic;
+    }
+
     /* Dropdown styling */
     .dropdown-container select {
         width: 250px;
@@ -66,32 +74,25 @@
         cursor: pointer;
         transition: all 0.2s;
     }
-    
+
     .dropdown-container select:hover {
         border-color: #000000;
         background-color: #f0f0f0;
     }
-    
+
     .dropdown-container select:focus {
         outline: none;
         border-color: #000000;
         background-color: #ffffff;
     }
-    
-    .dropdown-hint {
-        font-size: 14px;
-        color: #666;
-        margin-left: 15px;
-        font-style: italic;
-    }
-    
+
     /* Radio options styling */
     .radio-options {
         list-style-type: none;
         padding: 0;
         margin: 0;
     }
-    
+
     .radio-options li {
         display: flex;
         align-items: center;
@@ -102,12 +103,12 @@
         cursor: pointer;
         transition: all 0.2s;
     }
-    
+
     .radio-options li:hover {
         background-color: #f0f0f0;
         border-color: #000000;
     }
-    
+
     .radio-options input[type="radio"] {
         margin-right: 12px;
         cursor: pointer;
@@ -115,7 +116,7 @@
         height: 18px;
         pointer-events: none;
     }
-    
+
     .radio-options label {
         cursor: pointer;
         flex: 1;
@@ -123,7 +124,7 @@
         font-size: 16px;
         color: #000000;
     }
-    
+
     /* Horizontal radio for importance scale */
     .importance-scale {
         display: flex;
@@ -132,7 +133,7 @@
         margin-top: 15px;
         gap: 10px;
     }
-    
+
     .importance-scale .scale-option {
         flex: 1;
         text-align: center;
@@ -140,14 +141,14 @@
         flex-direction: column;
         align-items: center;
     }
-    
+
     .importance-scale input[type="radio"] {
         width: 20px;
         height: 20px;
         cursor: pointer;
         margin-bottom: 8px;
     }
-    
+
     .importance-scale label {
         font-size: 14px;
         color: #000000;
@@ -158,20 +159,48 @@
         align-items: center;
         justify-content: center;
     }
-    
-    .scale-labels {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-        font-size: 14px;
-        font-weight: bold;
+
+    /* Feedback textarea styling */
+    .feedback-container textarea {
+        width: 100%;
+        min-height: 120px;
+        padding: 15px;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+        border: 2px solid #e0e0e0;
+        background-color: #fafafa;
+        resize: vertical;
+        transition: all 0.2s;
     }
-    
+
+    .feedback-container textarea:hover {
+        border-color: #000000;
+        background-color: #f0f0f0;
+    }
+
+    .feedback-container textarea:focus {
+        outline: none;
+        border-color: #000000;
+        background-color: #ffffff;
+    }
+
+    .feedback-container textarea::placeholder {
+        color: #999;
+        font-style: italic;
+    }
+
+    .char-counter {
+        text-align: right;
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+    }
+
     .submit-container {
         text-align: center;
         margin-top: 35px;
     }
-    
+
     .otree-btn-next {
         background: #000000 !important;
         color: white !important;
@@ -184,33 +213,27 @@
         letter-spacing: 2px !important;
         text-transform: uppercase !important;
     }
-    
+
     .otree-btn-next:hover {
         background: #333333 !important;
         transform: translateY(-2px);
     }
-    
+
     @media (max-width: 768px) {
         .demographics-container {
             padding: 40px 30px;
         }
-        
+
         .demographics-title {
             font-size: 26px;
         }
-        
+
         .question-text {
             font-size: 16px;
         }
-        
+
         .dropdown-container select {
             width: 100%;
-        }
-        
-        .dropdown-hint {
-            display: block;
-            margin-left: 0;
-            margin-top: 8px;
         }
         
         .importance-scale {
@@ -380,7 +403,19 @@
             </div>
         </div>
     </div>
-    
+
+        <!-- Question 6: Feedback (Optional) -->
+    <div class="question-block">
+        <div class="question-text">
+            (6) Do you have any comments or feedback about this experiment? (This question won't appear in the real experiment)
+            <span class="optional-tag">(Optional)</span>
+        </div>
+        <div class="feedback-container">
+            <textarea name="feedback" id="id_feedback" maxlength="1000" placeholder="Please share your thoughts, suggestions, or any issues you encountered during the experiment...to help me further improve this experiment."></textarea>
+            <div class="char-counter" id="charCounter">0 / 2000 characters</div>
+        </div>
+    </div>
+
     <div class="submit-container">
         {{ next_button }}
     </div>
@@ -394,10 +429,24 @@
                 field.querySelector('input[name="gender"]') ||
                 field.querySelector('input[name="ethnicity"]') ||
                 field.querySelector('input[name="education_status"]') ||
-                field.querySelector('input[name="scr_importance"]')) {
+                field.querySelector('input[name="scr_importance"]') ||
+                field.querySelector('textarea[name="feedback"]')) {
                 field.style.display = 'none';
             }
         });
+
+        // Character counter for feedback
+        const feedbackTextarea = document.getElementById('id_feedback');
+        const charCounter = document.getElementById('charCounter');
+
+        if (feedbackTextarea && charCounter) {
+            feedbackTextarea.addEventListener('input', function() {
+                const currentLength = this.value.length;
+                const maxLength = 2000;
+
+                charCounter.textContent = currentLength + ' / ' + maxLength + ' characters';
+            });
+        }
     });
 </script>
 

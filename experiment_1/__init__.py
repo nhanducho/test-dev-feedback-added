@@ -3,14 +3,14 @@ import random
 
 
 doc = """
-Supply Chain Resilience Spending Game - Test Version
+Supply Chain Resilience Spending Game - Test Version (feedback added)
 """
 
 
 class C(BaseConstants):
     NAME_IN_URL = 'experiment_1'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 5
+    NUM_ROUNDS = 100
     INITIAL_PROFIT = 10000 #(base) total profit for 100 rounds
     GROSS_PROFIT = 100 #(base) gross profit every round
     DISRUPTION_COST = 2000 #(base) disruption impact
@@ -54,7 +54,7 @@ class C(BaseConstants):
             ]
         },
         {
-            'question': 'What is your Profit when you spend 20 ECU on SC resilience and no disruption occurs?',
+            'question': 'What is your Net profit when you spend 20 ECU on SC resilience and no disruption occurs?',
             'options': [
                 {'text': '80 ECU', 'correct': True},
                 {'text': '-20 ECU'},
@@ -898,6 +898,7 @@ def custom_export_demographics(players):
         'ethnicity',
         'education_status',
         'scr_importance',
+        'feedback'
     ]
 
     for p in players:
@@ -909,6 +910,7 @@ def custom_export_demographics(players):
                 p.ethnicity,
                 p.education_status,
                 p.scr_importance,
+                p.feedback if p.feedback else 'None',
             ]
 
 

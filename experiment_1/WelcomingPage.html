@@ -100,6 +100,43 @@
             }
         }
 
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        .data-table thead tr {
+            background-color: transparent;
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid #000000;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .data-table th {
+            font-weight: normal;
+        }
+
+        .data-table tbody tr {
+            background-color: transparent;
+            font-weight: bold;
+        }
+
+        .row-header {
+            font-weight: bold;
+        }
+
+
         @media (max-width: 480px) {
             .welcoming-container {
                 padding: 30px 20px;
@@ -119,8 +156,8 @@
                 font-size: 15px !important;
             }
         }
-    </style>
-</head>
+</style>
+
 <body>
     <div class="welcoming-container">
         <div class="welcoming-title">WELCOME TO THE SUPPLY CHAIN RISK MANAGEMENT EXPERIMENT</div>
@@ -130,7 +167,7 @@
                 <span class="highlight">Instructions</span>
             </p>
             <p class="content-text">
-                This game is an experiment about decision-making in supply chain risk management. The instructions are simple, and if you read them carefully and make good decisions, you could earn a considerable amount of money which will be paid to you in cash at the end of the experiment. To ensure that the instructions are clear and understandable, you are asked to answer a couple of multiple-choice questions on the next page. The real experiment will proceed once you complete all questions correctly. During the experiment, you are not allowed to make noise or talk to other participants. The first violation of this rule will result in a warning, and the second violation will result in immediate termination of participation; in this case, your earnings will be 0. If you have any questions during the experiment, please notify the instructor to receive the support needed.
+                This game is an experiment about decision-making in supply chain risk management. The instructions are simple, and if you read them carefully and make good decisions, you could earn a considerable amount of money which will be paid to you in cash at the end of the experiment. <u>To ensure that the instructions are clear and understandable, you are asked to answer a couple of multiple-choice questions on the next page. The real experiment will proceed once you complete all questions correctly.</u> During the experiment, you are not allowed to make noise or talk to other participants. The first violation of this rule will result in a warning, and the second violation will result in immediate termination of participation; in this case, your earnings will be 0. If you have any questions during the experiment, please notify the instructor to receive the support needed.
             </p>
 
             <p class="content-text" style="text-align: center;">
@@ -185,8 +222,59 @@
                 <span class="highlight">How Supply Chain Resilience Spending Works</span>
             </p>
             <p class="content-text">
-                SC resilience is widely regarded as one of the best strategies that enables your company to proactively prepare for unforeseen disruptions. In this experiment, spending on SC resilience allows you to reduce both the probability and the financial impact of possible disruptions. The role is simple: the higher you spend on SC resilience, the lower the likelihood of disruptions occurring, as well as the lower the disruption-related costs if disruptions do happen. For example, if you decide to spend 20 ECU on SC resilience, the new probability of disruption occurring is now 4%, and the new impact in the event of disruption is 1600 ECU. You can also choose not to spend on SC resilience by inserting 0 ECU, meaning that you accept the disruption probability of 5% and the potential loss of 2000 ECU. Conversely, you can decide to spend up to a maximum of 100 ECU to eliminate all risks of SC disruptions (i.e., 0% disruption probability, 0 ECU of impact). During the experiment, a decision support tool is always available to help you calculate the revised probability and revised impact of disruptions based on your spending amount.
+                SC resilience is widely regarded as one of the best strategies that enables your company to proactively prepare for unforeseen disruptions. In this experiment, spending on SC resilience allows you to reduce both the probability and the financial impact of possible disruptions. The rule is simple: <b>the higher you spend on SC resilience, the lower the likelihood of disruptions occurring, as well as the lower the disruption-related costs if disruptions do happen</b>. For example, if you decide to spend 20 ECU on SC resilience, the new probability of disruption occurring is now 4%, and the new impact in the event of disruption is 1600 ECU. You can also choose not to spend on SC resilience by inserting 0 ECU, meaning that you accept the disruption probability of 5% and the potential loss of 2000 ECU. Conversely, you can decide to spend up to a maximum of 100 ECU to eliminate all risks of SC disruptions (i.e., 0% disruption probability, 0 ECU of impact). You can find the revised probability and revised impact of disruptions corresponding to the particular amount of spending in the table below. During the experiment, a decision support tool is always available to help you calculate the <u>precise</u> revised probability and revised impact of disruptions based on your specific spending amount.
             </p>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Spending (ECU)</th>
+                            <th>0</th>
+                            <th>10</th>
+                            <th>20</th>
+                            <th>30</th>
+                            <th>40</th>
+                            <th>50</th>
+                            <th>60</th>
+                            <th>70</th>
+                            <th>80</th>
+                            <th>90</th>
+                            <th>100</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="row-header">Revised Probability</td>
+                            <td>5.0%</td>
+                            <td>4.5%</td>
+                            <td>4.0%</td>
+                            <td>3.5%</td>
+                            <td>3.0%</td>
+                            <td>2.5%</td>
+                            <td>2.0%</td>
+                            <td>1.5%</td>
+                            <td>1.0%</td>
+                            <td>0.5%</td>
+                            <td>0%</td>
+                        </tr>
+                        <tr>
+                            <td class="row-header">Revised Impact</td>
+                            <td>2000</td>
+                            <td>1800</td>
+                            <td>1600</td>
+                            <td>1400</td>
+                            <td>1200</td>
+                            <td>1000</td>
+                            <td>800</td>
+                            <td>600</td>
+                            <td>400</td>
+                            <td>200</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <p class="content-text" style="text-align: center;">
                 <span class="highlight">Your Objective</span>
