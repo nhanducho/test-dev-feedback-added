@@ -106,7 +106,7 @@ class C(BaseConstants):
     ]
 
     # Demographic questionnaire
-    BIRTH_YEARS = list(range(1980, 2011))  # 1980 to 2010
+    BIRTH_YEARS = list(range(1970, 2011))  # 1980 to 2010
 
     GENDER_CHOICES = [
         ['male', 'Male'],
@@ -233,6 +233,13 @@ class Player(BasePlayer):
         choices=C.SCR_IMPORTANCE_CHOICES,
         widget=widgets.RadioSelectHorizontal,
         blank=False
+    )
+
+    # Feedback field
+    feedback = models.LongStringField(
+        label="Do you have any comments or feedback about this experiment?",
+        blank=True,
+        max_length=2000,
     )
 
 
@@ -744,7 +751,7 @@ class ExtraTaskResult(Page):
 
 class DemographicPage(Page):
     form_model = 'player'
-    form_fields = ['birth_year', 'gender', 'ethnicity', 'education_status', 'scr_importance']
+    form_fields = ['birth_year', 'gender', 'ethnicity', 'education_status', 'scr_importance', 'feedback']
 
     @staticmethod
     def is_displayed(player: Player):
