@@ -591,8 +591,9 @@ class GameResultPage(Page):
         if performance_payment <= 0: performance_payment = 0
 
         # Calculate the total game payment
-        total_payment = C.SHOW_UP_FEE + performance_payment
-        total_payment = round(total_payment, 1)
+        # total_payment = C.SHOW_UP_FEE + performance_payment
+        total_payment = performance_payment
+        total_payment = round(total_payment, 2)
 
         player.participant.payoff = total_payment
 
