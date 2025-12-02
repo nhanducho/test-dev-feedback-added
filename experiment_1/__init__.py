@@ -3,7 +3,7 @@ import random
 
 
 doc = """
-Supply Chain Resilience Spending Game - Test Version (feedback added)
+Supply Chain Resilience Spending Game
 """
 
 
@@ -235,12 +235,44 @@ class Player(BasePlayer):
         blank=False
     )
 
-    # Feedback field
-    feedback = models.LongStringField(
-        label="Do you have any comments or feedback about this experiment?",
-        blank=True,
-        max_length=2000,
-    )
+    # Time tracking fields for each page
+    welcoming_page_loaded = models.StringField(initial='')
+    welcoming_form_submitted = models.StringField(initial='')
+    instruction1_page_loaded = models.StringField(initial='')
+    instruction1_form_submitted = models.StringField(initial='')
+    instruction2_page_loaded = models.StringField(initial='')
+    instruction2_form_submitted = models.StringField(initial='')
+    payment_page_loaded = models.StringField(initial='')
+    payment_form_submitted = models.StringField(initial='')
+    question_page_loaded = models.StringField(initial='')
+    question_form_submitted = models.StringField(initial='')
+    game_page_loaded = models.StringField(initial='')
+    game_form_submitted = models.StringField(initial='')
+    game_result_page_loaded = models.StringField(initial='')
+    game_result_form_submitted = models.StringField(initial='')
+    extra_task1_page_loaded = models.StringField(initial='')
+    extra_task1_form_submitted = models.StringField(initial='')
+    extra_task2_page_loaded = models.StringField(initial='')
+    extra_task2_form_submitted = models.StringField(initial='')
+    extra_task_result_page_loaded = models.StringField(initial='')
+    extra_task_result_form_submitted = models.StringField(initial='')
+    demographic_page_loaded = models.LongStringField(initial='')
+    demographic_form_submitted = models.LongStringField(initial='')
+
+    # Duration fields in seconds for each page
+    welcoming_duration = models.FloatField(initial=0)
+    instruction1_duration = models.FloatField(initial=0)
+    instruction2_duration = models.FloatField(initial=0)
+    payment_duration = models.FloatField(initial=0)
+    question_duration = models.FloatField(initial=0)
+    game_duration = models.FloatField(initial=0)
+    game_result_duration = models.FloatField(initial=0)
+    extra_task1_duration = models.FloatField(initial=0)
+    extra_task2_duration = models.FloatField(initial=0)
+    extra_task_result_duration = models.FloatField(initial=0)
+    demographic_duration = models.FloatField(initial=0)
+    total_duration = models.FloatField(initial=0)
+    total_duration_excluding_results = models.FloatField(initial=0)
 
 
 class CombinedResult(ExtraModel):
@@ -258,9 +290,71 @@ class WelcomingPage(Page):
     def is_displayed(player: Player):
         return player.round_number == 1
 
+    @staticmethod
+    def live_method(player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('welcoming_page_loaded') or ''
+            player.welcoming_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('welcoming_form_submitted') or ''
+            player.welcoming_form_submitted = prev + str(data['form_submitted']) + ", "
+
+
+class InstructionPage1(Page):
+    allow_back_button = True
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == 1
+
+    @staticmethod
+    def live_method(player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('instruction1_page_loaded') or ''
+            player.instruction1_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('instruction1_form_submitted') or ''
+            player.instruction1_form_submitted = prev + str(data['form_submitted']) + ", "
+
+
+class InstructionPage2(Page):
+    allow_back_button = True
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == 1
+
+    @staticmethod
+    def live_method(player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('instruction2_page_loaded') or ''
+            player.instruction2_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('instruction2_form_submitted') or ''
+            player.instruction2_form_submitted = prev + str(data['form_submitted']) + ", "
+
+
+class PaymentInfo(Page):
+    allow_back_button = True
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == 1
+
+    @staticmethod
+    def live_method(player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('payment_page_loaded') or ''
+            player.payment_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('payment_form_submitted') or ''
+            player.payment_form_submitted = prev + str(data['form_submitted']) + ", "
+
+
 class QuestionPage(Page):
     form_model = 'player'
     form_fields = ['comp_q1', 'comp_q2', 'comp_q3', 'comp_q4', 'comp_q5']
+    allow_back_button = True
 
     @staticmethod
     def is_displayed(player: Player):
@@ -368,6 +462,16 @@ class QuestionPage(Page):
             player.question_attempts += 1
             return f"Some answers are incorrect. Please try again. (Attempt {player.question_attempts + 1})"
 
+    @staticmethod
+    def live_method(player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('question_page_loaded') or ''
+            player.question_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('question_form_submitted') or ''
+            player.question_form_submitted = prev + str(data['form_submitted']) + ", "
+
+
 class GamePage(Page):
     form_model = 'player'
     form_fields = ['money_input']
@@ -442,6 +546,12 @@ class GamePage(Page):
 
     @staticmethod
     def live_method(player: Player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('game_page_loaded') or ''
+            player.game_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('game_form_submitted') or ''
+            player.game_form_submitted = prev + str(data['form_submitted']) + ", "
         if data['action'] == 'calculate_result':
             spending = data['spending']
 
@@ -586,7 +696,7 @@ class GameResultPage(Page):
         num_disruptions = sum(1 for r in all_results if r.is_disrupted)
 
         # Calculate the payoff relative to performance
-        performance_payment = final_profit * C.CONVERSION_RATE
+        performance_payment = float(final_profit) * C.CONVERSION_RATE
         performance_payment = round(performance_payment, 1)
         if performance_payment <= 0: performance_payment = 0
 
@@ -594,7 +704,7 @@ class GameResultPage(Page):
         total_payment = C.SHOW_UP_FEE + performance_payment
         total_payment = round(total_payment, 1)
 
-        player.participant.payoff = total_payment
+        player.participant.payoff = performance_payment
 
         return dict(
             all_results=all_results,
@@ -609,6 +719,15 @@ class GameResultPage(Page):
             performance_payment=performance_payment,
             total_payment=total_payment,
         )
+
+    @staticmethod
+    def live_method(player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('game_result_page_loaded') or ''
+            player.game_result_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('game_result_form_submitted') or ''
+            player.game_result_form_submitted = prev + str(data['form_submitted']) + ", "
 
 
 class ExtraTask1(Page):
@@ -651,6 +770,15 @@ class ExtraTask1(Page):
         else:
             player.task1_payoff = decision_payoffs['other']
 
+    @staticmethod
+    def live_method(player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('extra_task1_page_loaded') or ''
+            player.extra_task1_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('extra_task1_form_submitted') or ''
+            player.extra_task1_form_submitted = prev + str(data['form_submitted']) + ", "
+
 class ExtraTask2 (Page):
     form_model = 'player'
     form_fields = ['task2_g1', 'task2_g2', 'task2_g3', 'task2_g4', 'task2_g5', 'task2_g6']
@@ -667,12 +795,12 @@ class ExtraTask2 (Page):
         choice = getattr(player, gamble_field)
 
         gambles = {
-            1: (-2000, 6000),
-            2: (-3000, 6000),
-            3: (-4000, 6000),
-            4: (-5000, 6000),
-            5: (-6000, 6000),
-            6: (-7000, 6000),
+            1: (-200, 600),
+            2: (-300, 600),
+            3: (-400, 600),
+            4: (-500, 600),
+            5: (-600, 600),
+            6: (-700, 600),
         }
 
         if choice == 'Reject':
@@ -686,6 +814,15 @@ class ExtraTask2 (Page):
                 player.task2_payoff = gambles[player.task2_selected_gamble][0]
             else:
                 player.task2_payoff = gambles[player.task2_selected_gamble][1]
+
+    @staticmethod
+    def live_method(player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('extra_task2_page_loaded') or ''
+            player.extra_task2_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('extra_task2_form_submitted') or ''
+            player.extra_task2_form_submitted = prev + str(data['form_submitted']) + ", "
 
 
 class ExtraTaskResult(Page):
@@ -707,7 +844,7 @@ class ExtraTaskResult(Page):
         total_disruption_cost = sum(r.cost_of_disruption for r in all_results)
         final_profit = all_results[-1].expected_profit if all_results else C.INITIAL_PROFIT
 
-        performance_payment = final_profit * C.CONVERSION_RATE
+        performance_payment = float(final_profit) * C.CONVERSION_RATE
         performance_payment = round(performance_payment, 1)
         if performance_payment <= 0: performance_payment = 0
         spending_game_payment = C.SHOW_UP_FEE + performance_payment
@@ -719,7 +856,7 @@ class ExtraTaskResult(Page):
 
         # Total payment
         total_payment = round(spending_game_payment + tasks_total_payment, 1)
-        player.participant.payoff = total_payment
+        player.participant.payoff = tasks_total_payment + performance_payment
 
         return dict(
             # Spending game
@@ -748,14 +885,139 @@ class ExtraTaskResult(Page):
             total_payment=total_payment,
         )
 
+    @staticmethod
+    def live_method(player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('extra_task_result_page_loaded') or ''
+            player.extra_task_result_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('extra_task_result_form_submitted') or ''
+            player.extra_task_result_form_submitted = prev + str(data['form_submitted']) + ", "
+
 
 class DemographicPage(Page):
     form_model = 'player'
-    form_fields = ['birth_year', 'gender', 'ethnicity', 'education_status', 'scr_importance', 'feedback']
+    form_fields = ['birth_year', 'gender', 'ethnicity', 'education_status', 'scr_importance']
 
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == C.NUM_ROUNDS and not player.in_round(1).question_failed
+
+    @staticmethod
+    def live_method(player, data):
+        if "page_loaded" in data:
+            prev = player.field_maybe_none('demographic_page_loaded') or ''
+            player.demographic_page_loaded = prev + str(data['page_loaded']) + ", "
+        if "form_submitted" in data:
+            prev = player.field_maybe_none('demographic_form_submitted') or ''
+            player.demographic_form_submitted = prev + str(data['form_submitted']) + ", "
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        # Calculate and store all duration values when demographic page is submitted
+        def get_duration(page_loaded_str, form_submitted_str):
+            """
+            Sum duration over all visits to a page.
+            Both arguments are strings like "ts1, ts2, ts3, ...".
+            Timestamps are in milliseconds (from Date.now()).
+            Returns seconds (float, 3 decimals).
+            """
+            if not page_loaded_str or not page_loaded_str.strip() or not form_submitted_str or not form_submitted_str.strip():
+                return 0
+
+            try:
+                page_loaded_ts = [ts.strip() for ts in page_loaded_str.rstrip(', ').split(',') if ts.strip()]
+                form_submitted_ts = [ts.strip() for ts in form_submitted_str.rstrip(', ').split(',') if ts.strip()]
+
+                if not page_loaded_ts or not form_submitted_ts:
+                    return 0
+
+                # Pair them: visit 1 = (load[0], submit[0]), visit 2 = (load[1], submit[1]), etc.
+                min_len = min(len(page_loaded_ts), len(form_submitted_ts))
+
+                total_ms = 0.0
+                for i in range(min_len):
+                    start = float(page_loaded_ts[i])
+                    end = float(form_submitted_ts[i])
+                    if end > start:  # avoid negative durations just in case
+                        total_ms += end - start
+
+                return round(total_ms / 1000.0, 3)  # convert ms → seconds
+            except (ValueError, TypeError, IndexError) as e:
+                print('Error computing duration:', e, page_loaded_str, form_submitted_str)
+                return 0
+
+        # Get all rounds for this player
+        all_rounds = player.in_all_rounds()
+        first_round_player = all_rounds[0]  # Round 1
+        last_round_player = all_rounds[-1]  # Last round (current)
+
+        # Calculate individual page durations
+        welcoming_duration = get_duration(first_round_player.welcoming_page_loaded,
+                                          first_round_player.welcoming_form_submitted)
+        instruction1_duration = get_duration(first_round_player.instruction1_page_loaded,
+                                          first_round_player.instruction1_form_submitted)
+        instruction2_duration = get_duration(first_round_player.instruction2_page_loaded,
+                                             first_round_player.instruction2_form_submitted)
+        payment_duration = get_duration(first_round_player.payment_page_loaded,
+                                          first_round_player.payment_form_submitted)
+        question_duration = get_duration(first_round_player.question_page_loaded,
+                                         first_round_player.question_form_submitted)
+        game_result_duration = get_duration(last_round_player.game_result_page_loaded,
+                                            last_round_player.game_result_form_submitted)
+        extra_task1_duration = get_duration(last_round_player.extra_task1_page_loaded,
+                                            last_round_player.extra_task1_form_submitted)
+        extra_task2_duration = get_duration(last_round_player.extra_task2_page_loaded,
+                                            last_round_player.extra_task2_form_submitted)
+        extra_task_result_duration = get_duration(last_round_player.extra_task_result_page_loaded,
+                                                  last_round_player.extra_task_result_form_submitted)
+        demographic_duration = get_duration(last_round_player.demographic_page_loaded,
+                                            last_round_player.demographic_form_submitted)
+
+        # Calculate total game duration from all rounds
+        total_game_duration = 0
+        all_game_page_loaded = []
+        all_game_form_submitted = []
+        for p in all_rounds:
+            if p.game_page_loaded and p.game_page_loaded.strip():
+                all_game_page_loaded.extend(
+                    [ts.strip() for ts in p.game_page_loaded.rstrip(', ').split(',') if ts.strip()])
+            if p.game_form_submitted and p.game_form_submitted.strip():
+                all_game_form_submitted.extend(
+                    [ts.strip() for ts in p.game_form_submitted.rstrip(', ').split(',') if ts.strip()])
+
+        if all_game_page_loaded and all_game_form_submitted:
+            try:
+                min_len = min(len(all_game_page_loaded), len(all_game_form_submitted))
+                total_ms = sum(
+                    max(0, float(all_game_form_submitted[i]) - float(all_game_page_loaded[i])) for i in range(min_len))
+                total_game_duration = round(total_ms / 1000.0, 3)
+            except (ValueError, TypeError, IndexError):
+                pass
+
+        # Store individual durations in the last round player
+        last_round_player.welcoming_duration = welcoming_duration
+        last_round_player.instruction1_duration = instruction1_duration
+        last_round_player.instruction2_duration = instruction2_duration
+        last_round_player.payment_duration = payment_duration
+        last_round_player.question_duration = question_duration
+        last_round_player.game_duration = total_game_duration
+        last_round_player.game_result_duration = game_result_duration
+        last_round_player.extra_task1_duration = extra_task1_duration
+        last_round_player.extra_task2_duration = extra_task2_duration
+        last_round_player.extra_task_result_duration = extra_task_result_duration
+        last_round_player.demographic_duration = demographic_duration
+
+        # Calculate and store total durations
+        total_duration = (welcoming_duration + instruction1_duration + instruction2_duration + payment_duration +
+                          question_duration + total_game_duration + game_result_duration + extra_task1_duration +
+                          extra_task2_duration + extra_task_result_duration + demographic_duration)
+        last_round_player.total_duration = round(total_duration, 3)
+
+        total_duration_excluding_results = (welcoming_duration + instruction1_duration + instruction2_duration +
+                                            payment_duration + question_duration + total_game_duration +
+                                            extra_task1_duration + extra_task2_duration + demographic_duration)
+        last_round_player.total_duration_excluding_results = round(total_duration_excluding_results, 3)
 
 
 class EndingPage(Page):
@@ -778,7 +1040,7 @@ class EndingPage(Page):
         final_profit = all_results[-1].expected_profit if all_results else C.INITIAL_PROFIT
 
         # Calculate game payments
-        performance_payment = final_profit * C.CONVERSION_RATE
+        performance_payment = float(final_profit) * C.CONVERSION_RATE
         performance_payment = round(performance_payment, 1)
         if performance_payment <= 0: performance_payment = 0
         spending_game_payment = C.SHOW_UP_FEE + performance_payment
@@ -830,6 +1092,7 @@ class EndingPage(Page):
                                                   player.education_status) if player.education_status else 'Not provided',
             scr_importance=player.scr_importance if player.scr_importance else 'Not provided',
         )
+
 
 def custom_export_game(players):
     players = sorted(players, key=lambda p: (p.id_in_group, p.round_number))
@@ -905,7 +1168,6 @@ def custom_export_demographics(players):
         'ethnicity',
         'education_status',
         'scr_importance',
-        'feedback'
     ]
 
     for p in players:
@@ -917,8 +1179,49 @@ def custom_export_demographics(players):
                 p.ethnicity,
                 p.education_status,
                 p.scr_importance,
-                p.feedback if p.feedback else 'None',
+            ]
+
+def custom_export_time_tracking(players):
+    # Filter to only include last round players with duration data
+    last_round_players = [p for p in players if p.round_number == C.NUM_ROUNDS]
+    last_round_players = sorted(last_round_players, key=lambda p: p.id_in_group)
+
+    yield [
+        'player_id',
+        'welcoming_duration',
+        'instruction1_duration',
+        'instruction2_duration',
+        'payment_duration',
+        'question_duration',
+        'game_duration',
+        'game_result_duration',
+        'extra_task1_duration',
+        'extra_task2_duration',
+        'extra_task_result_duration',
+        'demographic_duration',
+        'total_duration',
+        'total_duration_excluding_results',
+    ]
+
+    for p in last_round_players:
+        # Export if any duration field has been calculated (demographic page has been completed)
+        if (p.total_duration or 0) > 0 or (p.demographic_duration or 0) > 0:
+            yield [
+                p.id_in_group,
+                p.welcoming_duration,
+                p.instruction1_duration,
+                p.instruction2_duration,
+                p.payment_duration,
+                p.question_duration,
+                p.game_duration,
+                p.game_result_duration,
+                p.extra_task1_duration,
+                p.extra_task2_duration,
+                p.extra_task_result_duration,
+                p.demographic_duration,
+                p.total_duration,
+                p.total_duration_excluding_results,
             ]
 
 
-page_sequence = [WelcomingPage, QuestionPage, GamePage, GameResultPage, ExtraTask1, ExtraTask2, ExtraTaskResult, DemographicPage, EndingPage]
+page_sequence = [WelcomingPage, InstructionPage1, InstructionPage2, PaymentInfo, QuestionPage, GamePage, GameResultPage, ExtraTask1, ExtraTask2, ExtraTaskResult, DemographicPage, EndingPage]

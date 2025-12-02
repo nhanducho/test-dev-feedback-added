@@ -1,0 +1,217 @@
+{{ block content }}
+
+<style>
+        .otree-title {
+            display: none !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .otree-body {
+            max-width: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            padding: 20px;
+        }
+
+        .welcoming-container {
+            background-color: #FFFFFF;
+            border: 3px solid #000000;
+            border-radius: 0;
+            padding: 40px 60px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 30px auto;
+        }
+
+        .content-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #000000;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .highlight {
+            font-weight: bold;
+        }
+
+        .start-btn-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 35px;
+        gap: 20px;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .data-table thead tr {
+            background-color: transparent;
+        }
+        .data-table th,
+        .data-table td {
+            border: 1px solid #000000;
+            padding: 12px;
+            text-align: center;
+        }
+        .data-table th {
+            font-weight: normal;
+        }
+        .data-table tbody tr {
+            background-color: transparent;
+            font-weight: bold;
+        }
+        .row-header {
+            font-weight: bold;
+        }
+
+        .otree-btn-next {
+            background: #000000 !important;
+            color: white !important;
+            border: none !important;
+            padding: 18px 50px !important;
+            font-size: 18px !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+        }
+
+        .otree-btn-next:hover {
+            background: #333333 !important;
+            transform: translateY(-2px);
+        }
+
+        /* Back button styling */
+        .btn-outline-secondary,
+        .otree-btn-back {
+        background: transparent !important;
+        color: #000000 !important;
+        border: 3px solid #000000 !important;
+        padding: 18px 50px !important;
+        font-size: 18px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+        margin-right: 15px !important;
+        }
+
+        .btn-outline-secondary:hover,
+        .otree-btn-back:hover {
+        background: #000000 !important;
+        color: white !important;
+        transform: translateY(-2px);
+        }
+
+        .submit-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 35px;
+        gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .welcoming-container {
+                padding: 40px 30px;
+            }
+
+            .content-text {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+
+            .otree-btn-next {
+                padding: 15px 40px !important;
+                font-size: 16px !important;
+            }
+
+            .otree-btn-back {
+                width: 100%;
+                padding: 15px 30px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcoming-container {
+                padding: 30px 20px;
+            }
+
+            .content-text {
+                font-size: 15px;
+            }
+
+            .otree-btn-next {
+                width: 100%;
+                padding: 15px 30px !important;
+                font-size: 15px !important;
+            }
+
+            .otree-btn-back {
+                width: 100%;
+                padding: 15px 30px !important;
+            }
+        }
+</style>
+
+<div class="welcoming-container">
+    <p class="content-text" style="text-align: center;">
+        <span class="highlight">Your Payment Determination</span>
+    </p>
+    <p class="content-text">
+        At the end of the experiment, your final profit that has been accumulated from the realized profits of each 100 rounds will be converted into Euros (€) at a rate of <b>€1 per 1500 ECU</b>. This performance pay-off will then be added to your show-up fee of <b>€3</b> to determine your final earnings, which will be paid to you after you complete two additional tasks, with which you have the chance of earning more money, and the demographic questionnaire.
+    </p>
+    <p class="content-text">
+        Please be aware that your final profit could be less than or equal to 0 if you incur substantial losses and/or excess spending. Should this be the case after 100 rounds of the experiment, your performance pay-off will be automatically set at €0, but your show-up fee of €3 will remain intact.
+    </p>
+
+    <div class="submit-container">
+        {{ back_button }}
+        {{ next_button }}
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        startTime = Date.now();
+        liveSend({'page_loaded': startTime});
+    };
+
+    function getTime() {
+        endTime = Date.now();
+        liveSend({'form_submitted': endTime});
+    };
+
+    // Intercept form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const nextButton = document.querySelector('.otree-btn-next');
+        if (nextButton) {
+            nextButton.addEventListener('click', function(e) {
+                getTime();
+            });
+        }
+    });
+</script>
+
+{{ endblock }}
+
+

@@ -204,10 +204,32 @@
     <div class="thank-you">
         Money will be paid once you complete the two extra tasks (plus a short demographic questionnaire) on the next pages, for which you have the opportunity to earn more money, in addition to this payment!
     </div>
+
+    <div class="button-container">
+    {{ next_button }}
+    </div>
 </div>
 
-<div class="button-container">
-    {{ next_button }}
-</div>
+<script>
+    window.onload = function() {
+        startTime = Date.now();
+        liveSend({'page_loaded': startTime});
+    };
+
+    function getTime() {
+        endTime = Date.now();
+        liveSend({'form_submitted': endTime});
+    };
+
+    // Intercept form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const nextButton = document.querySelector('.otree-btn-next');
+        if (nextButton) {
+            nextButton.addEventListener('click', function(e) {
+                getTime();
+            });
+        }
+    });
+</script>
 
 {{ endblock }}

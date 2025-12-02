@@ -977,6 +977,25 @@
         }
 
     });
+
+    // Time tracking
+    window.onload = function() {
+        startTime = Date.now();
+        liveSend({'page_loaded': startTime});
+    };
+
+    function getTime() {
+        endTime = Date.now();
+        liveSend({'form_submitted': endTime});
+    };
+
+    // Intercept form submission
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            getTime();
+        });
+    }
 </script>
 
 {{ endblock }}

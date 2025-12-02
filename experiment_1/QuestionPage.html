@@ -129,8 +129,11 @@
     }
 
     .submit-container {
-        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-top: 35px;
+        gap: 20px;
     }
 
     .otree-btn-next {
@@ -148,6 +151,29 @@
 
     .otree-btn-next:hover {
         background: #333333 !important;
+        transform: translateY(-2px);
+    }
+
+    /* Back button styling */
+    .btn-outline-secondary,
+    .otree-btn-back {
+        background: transparent !important;
+        color: #000000 !important;
+        border: 3px solid #000000 !important;
+        padding: 18px 50px !important;
+        font-size: 18px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+        margin-right: 15px !important;
+    }
+
+    .btn-outline-secondary:hover,
+    .otree-btn-back:hover {
+        background: #000000 !important;
+        color: white !important;
         transform: translateY(-2px);
     }
 
@@ -195,6 +221,18 @@
         .otree-btn-next {
             width: 100%;
             padding: 15px 30px !important;
+        }
+
+        .btn-outline-secondary,
+        .otree-btn-back {
+            width: 100%;
+            padding: 15px 30px !important;
+            margin-right: 0 !important;
+            margin-bottom: 10px !important;
+        }
+
+        .submit-container {
+            flex-direction: column-reverse;
         }
     }
 </style>
@@ -316,8 +354,31 @@
     </div>
 
     <div class="submit-container">
+        {{ back_button }}
         {{ next_button }}
     </div>
 </div>
+
+<script>
+    window.onload = function() {
+        startTime = Date.now();
+        liveSend({'page_loaded': startTime});
+    };
+
+    function getTime() {
+        endTime = Date.now();
+        liveSend({'form_submitted': endTime});
+    };
+
+    // Intercept form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                getTime();
+            });
+        }
+    });
+</script>
 
 {{ endblock }}

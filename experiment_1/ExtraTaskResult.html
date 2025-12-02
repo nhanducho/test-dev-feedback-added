@@ -262,4 +262,26 @@
     </div>
 </div>
 
+<script>
+    window.onload = function() {
+        startTime = Date.now();
+        liveSend({'page_loaded': startTime});
+    };
+
+    function getTime() {
+        endTime = Date.now();
+        liveSend({'form_submitted': endTime});
+    };
+
+    // Intercept form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const nextButton = document.querySelector('.otree-btn-next');
+        if (nextButton) {
+            nextButton.addEventListener('click', function(e) {
+                getTime();
+            });
+        }
+    });
+</script>
+
 {{ endblock }}

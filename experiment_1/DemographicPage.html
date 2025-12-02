@@ -404,48 +404,24 @@
         </div>
     </div>
 
-        <!-- Question 6: Feedback (Optional) -->
-    <div class="question-block">
-        <div class="question-text">
-            (6) Do you have any comments or feedback about this experiment? (This question won't appear in the real experiment)
-            <span class="optional-tag">(Optional)</span>
-        </div>
-        <div class="feedback-container">
-            <textarea name="feedback" id="id_feedback" maxlength="1000" placeholder="Please share your thoughts, suggestions, or any issues you encountered during the experiment...to help me further improve this experiment."></textarea>
-            <div class="char-counter" id="charCounter">0 / 2000 characters</div>
-        </div>
-    </div>
-
     <div class="submit-container">
         {{ next_button }}
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const formFields = document.querySelectorAll('.form-group');
-        formFields.forEach(field => {
-            if (field.querySelector('select[name="birth_year"]') ||
-                field.querySelector('input[name="gender"]') ||
-                field.querySelector('input[name="ethnicity"]') ||
-                field.querySelector('input[name="education_status"]') ||
-                field.querySelector('input[name="scr_importance"]') ||
-                field.querySelector('textarea[name="feedback"]')) {
-                field.style.display = 'none';
-            }
-        });
+    document.addEventListener('DOMContentLoaded', function () {
+        // send page load timestamp
+        liveSend({page_loaded: Date.now()});
 
-        // Character counter for feedback
-        const feedbackTextarea = document.getElementById('id_feedback');
-        const charCounter = document.getElementById('charCounter');
-
-        if (feedbackTextarea && charCounter) {
-            feedbackTextarea.addEventListener('input', function() {
-                const currentLength = this.value.length;
-                const maxLength = 2000;
-
-                charCounter.textContent = currentLength + ' / ' + maxLength + ' characters';
+        // send timestamp right before submitting the form
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function () {
+                liveSend({form_submitted: Date.now()});
             });
+        } else {
+            console.warn('No form found on demographic page!');
         }
     });
 </script>
