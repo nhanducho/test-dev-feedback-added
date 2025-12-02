@@ -10,14 +10,14 @@ Supply Chain Resilience Spending Game
 class C(BaseConstants):
     NAME_IN_URL = 'experiment_1'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 100
+    NUM_ROUNDS = 10
     INITIAL_PROFIT = 10000 #(base) total profit for 100 rounds
     GROSS_PROFIT = 100 #(base) gross profit every round
     DISRUPTION_COST = 2000 #(base) disruption impact
     BASIC_PROBABILITY = 5 #(base) disruption probability
     SHOW_UP_FEE = 3
     CONVERSION_RATE = 1 / 1500
-
+    PROLIFIC_COMPLETION_URL = 'https://app.prolific.com/submissions/complete?cc=C21CTUY6'
 
     # Comprehension Questions - 8 Multiple Choice Questions
     COMP_QUESTIONS_MC = [
@@ -156,7 +156,9 @@ class Player(BasePlayer):
     money_input = models.IntegerField(min=0, max=100, label="", blank=False)
     is_disrupted = models.BooleanField(initial=False)
     cost_of_disruption = models.IntegerField(initial=0)
-    total_costs = models.IntegerField(initial=0)
+    accumulative_total_costs = models.IntegerField(initial=0)
+    round_total_costs = models.FloatField(initial=0)
+    round_profit = models.FloatField(initial=0)
     expected_profit = models.IntegerField(initial=C.INITIAL_PROFIT)
     round_calculated = models.BooleanField(initial=False)
 
@@ -280,7 +282,9 @@ class CombinedResult(ExtraModel):
     spending = models.IntegerField()
     is_disrupted = models.BooleanField()
     cost_of_disruption = models.IntegerField()
-    total_costs = models.IntegerField(initial=0)
+    round_total_costs = models.FloatField(initial=0)
+    round_profit = models.FloatField(initial=0)
+    accumulative_total_costs = models.IntegerField(initial=0)
     expected_profit = models.IntegerField(initial=C.INITIAL_PROFIT)
 
 
@@ -552,6 +556,9 @@ class GamePage(Page):
         if "form_submitted" in data:
             prev = player.field_maybe_none('game_form_submitted') or ''
             player.game_form_submitted = prev + str(data['form_submitted']) + ", "
+        action = data.get('action')
+        if not action:
+            return
         if data['action'] == 'calculate_result':
             spending = data['spending']
 
@@ -580,16 +587,16 @@ class GamePage(Page):
                 prev_results = CombinedResult.filter(player=prev_player)
                 if prev_results:
                     prev_expected_profit = prev_results[0].expected_profit
-                    prev_total_costs = prev_results[0].total_costs
+                    prev_accumulative_total_costs = prev_results[0].accumulative_total_costs
                 else:
                     prev_expected_profit = C.INITIAL_PROFIT
-                    prev_total_costs = 0
+                    prev_accumulative_total_costs = 0
 
                 player.expected_profit = prev_expected_profit - spending - player.cost_of_disruption
-                player.total_costs = prev_total_costs + spending + player.cost_of_disruption
+                player.accumulative_total_costs = prev_accumulative_total_costs + spending + player.cost_of_disruption
             else:
                 player.expected_profit = C.INITIAL_PROFIT - spending - player.cost_of_disruption
-                player.total_costs = spending + player.cost_of_disruption
+                player.accumulative_total_costs = spending + player.cost_of_disruption
 
             existing_results = CombinedResult.filter(player=player)
             for result in existing_results:
@@ -600,7 +607,9 @@ class GamePage(Page):
                 spending=spending,
                 is_disrupted=player.is_disrupted,
                 cost_of_disruption=player.cost_of_disruption,
-                total_costs=player.total_costs,
+                round_total_costs=player.round_total_costs,
+                round_profit=player.round_profit,
+                accumulative_total_costs=player.accumulative_total_costs,
                 expected_profit=player.expected_profit,
             )
 
@@ -615,7 +624,7 @@ class GamePage(Page):
                     'disruption_probability': round(disruption_probability, 2),
                     'disruption_impact_if_occurs': disruption_impact,
                     'cost_of_disruption': player.cost_of_disruption,
-                    'total_costs': player.total_costs,
+                    'accumulative_total_costs': player.accumulative_total_costs,
                     'expected_profit': player.expected_profit,
                 }
             }
@@ -649,16 +658,16 @@ class GamePage(Page):
                 prev_results = CombinedResult.filter(player=prev_player)
                 if prev_results:
                     prev_expected_profit = prev_results[0].expected_profit
-                    prev_total_costs = prev_results[0].total_costs
+                    prev_accumulative_total_costs = prev_results[0].accumulative_total_costs
                 else:
                     prev_expected_profit = C.INITIAL_PROFIT
-                    prev_total_costs = 0
+                    prev_accumulative_total_costs = 0
 
                 player.expected_profit = prev_expected_profit - spending - player.cost_of_disruption
-                player.total_costs = prev_total_costs + spending + player.cost_of_disruption
+                player.accumulative_total_costs = prev_accumulative_total_costs + spending + player.cost_of_disruption
             else:
                 player.expected_profit = C.INITIAL_PROFIT - spending - player.cost_of_disruption
-                player.total_costs = spending + player.cost_of_disruption
+                player.accumulative_total_costs = spending + player.cost_of_disruption
 
             existing_results = CombinedResult.filter(player=player)
             for result in existing_results:
@@ -669,7 +678,9 @@ class GamePage(Page):
                 spending=spending,
                 is_disrupted=player.is_disrupted,
                 cost_of_disruption=player.cost_of_disruption,
-                total_costs=player.total_costs,
+                round_total_costs=player.round_total_costs,
+                round_profit=player.round_profit,
+                accumulative_total_costs=player.accumulative_total_costs,
                 expected_profit=player.expected_profit,
             )
 
@@ -916,12 +927,6 @@ class DemographicPage(Page):
     def before_next_page(player: Player, timeout_happened):
         # Calculate and store all duration values when demographic page is submitted
         def get_duration(page_loaded_str, form_submitted_str):
-            """
-            Sum duration over all visits to a page.
-            Both arguments are strings like "ts1, ts2, ts3, ...".
-            Timestamps are in milliseconds (from Date.now()).
-            Returns seconds (float, 3 decimals).
-            """
             if not page_loaded_str or not page_loaded_str.strip() or not form_submitted_str or not form_submitted_str.strip():
                 return 0
 
@@ -1094,6 +1099,17 @@ class EndingPage(Page):
         )
 
 
+class ProlificRedirect(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == C.NUM_ROUNDS and not player.in_round(1).question_failed
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            completion_url=C.PROLIFIC_COMPLETION_URL
+        )
+
 def custom_export_game(players):
     players = sorted(players, key=lambda p: (p.id_in_group, p.round_number))
 
@@ -1103,7 +1119,9 @@ def custom_export_game(players):
         'spending',
         'is_disrupted',
         'cost_of_disruption',
-        'total_costs',
+        'round_total_costs',
+        'round_profit',
+        'accumulative_total_costs',
         'expected_profit',
     ]
 
@@ -1116,7 +1134,9 @@ def custom_export_game(players):
                 r.spending,
                 1 if r.is_disrupted else 0,
                 r.cost_of_disruption,
-                r.total_costs,
+                r.round_total_costs,
+                r.round_profit,
+                r.accumulative_total_costs,
                 r.expected_profit
             ]
 
@@ -1224,4 +1244,4 @@ def custom_export_time_tracking(players):
             ]
 
 
-page_sequence = [WelcomingPage, InstructionPage1, InstructionPage2, PaymentInfo, QuestionPage, GamePage, GameResultPage, ExtraTask1, ExtraTask2, ExtraTaskResult, DemographicPage, EndingPage]
+page_sequence = [WelcomingPage, InstructionPage1, InstructionPage2, PaymentInfo, QuestionPage, GamePage, GameResultPage, ExtraTask1, ExtraTask2, ExtraTaskResult, DemographicPage, ProlificRedirect]
