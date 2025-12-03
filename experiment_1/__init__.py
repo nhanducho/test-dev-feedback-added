@@ -15,7 +15,7 @@ class C(BaseConstants):
     GROSS_PROFIT = 100 #(base) gross profit every round
     DISRUPTION_COST = 2000 #(base) disruption impact
     BASIC_PROBABILITY = 5 #(base) disruption probability
-    SHOW_UP_FEE = 3
+    SHOW_UP_FEE = 4
     CONVERSION_RATE = 1 / 1500
     PROLIFIC_COMPLETION_URL = 'https://app.prolific.com/submissions/complete?cc=C21CTUY6'
 
