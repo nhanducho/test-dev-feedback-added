@@ -10,7 +10,7 @@ Supply Chain Resilience Spending Game
 class C(BaseConstants):
     NAME_IN_URL = 'experiment_1'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 10
+    NUM_ROUNDS = 100
     INITIAL_PROFIT = 10000 #(base) total profit for 100 rounds
     GROSS_PROFIT = 100 #(base) gross profit every round
     DISRUPTION_COST = 2000 #(base) disruption impact
