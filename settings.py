@@ -20,6 +20,13 @@ SESSION_CONFIG_DEFAULTS = dict(
     doc=""
 )
 
+ROOMS = [
+    dict(
+        name='exp_room',
+        display_name='Experiment 1 Room',
+    )
+]
+
 PARTICIPANT_FIELDS = []
 SESSION_FIELDS = []
 
