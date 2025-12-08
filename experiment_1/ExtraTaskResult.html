@@ -185,7 +185,7 @@
     <h2 class="section-title">Task 1</h2>
     <table class="results-table">
         <tr>
-            <td>Randomly Selected Decision by Computer:</td>
+            <td>Selected Decision by Computer:</td>
             <td>Decision {{ task1_selected_decision }}</td>
         </tr>
         <tr>
@@ -193,7 +193,7 @@
             <td>Option {{ task1_choice }}</td>
         </tr>
         <tr>
-            <td>Payoff:</td>
+            <td>Your Payoff:</td>
             <td>{{ task1_payoff }} ECU</td>
         </tr>
         <tr class="highlight-row">
@@ -205,7 +205,7 @@
     <h2 class="section-title">Task 2</h2>
     <table class="results-table">
         <tr>
-            <td>Randomly Selected Gamble by Computer:</td>
+            <td>Selected Gamble by Computer:</td>
             <td>Gamble {{ task2_selected_gamble }}</td>
         </tr>
         <tr>
@@ -214,16 +214,16 @@
         </tr>
         {{ if task2_choice == 'Accept' }}
         <tr>
-            <td>Outcome:</td>
+            <td>Gamble Outcome:</td>
             <td>{{ if task2_outcome == 1 }}Win{{ else }}Loss{{ endif }}</td>
         </tr>
         <tr>
-            <td>Payoff:</td>
+            <td>Your Payoff:</td>
             <td>{{ task2_payoff }} ECU</td>
         </tr>
         {{ else }}
         <tr>
-            <td>Outcome:</td>
+            <td>Gamble Outcome:</td>
             <td>No gamble played</td>
         </tr>
         <tr>
@@ -240,11 +240,11 @@
     <h2 class="section-title">Summary</h2>
     <table class="results-table">
         <tr>
-            <td>Task 1 Payment:</td>
+            <td>Task 1 Earning:</td>
             <td>£{{ task1_payment }}</td>
         </tr>
         <tr>
-            <td>Task 2 Payment:</td>
+            <td>Task 2 Earning:</td>
             <td>£{{ task2_payment }}</td>
         </tr>
         <tr class="total-row">

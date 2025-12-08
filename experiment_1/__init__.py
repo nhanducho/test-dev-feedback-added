@@ -15,8 +15,8 @@ class C(BaseConstants):
     GROSS_PROFIT = 100 #(base) gross profit every round
     DISRUPTION_COST = 2000 #(base) disruption impact
     BASIC_PROBABILITY = 5 #(base) disruption probability
-    SHOW_UP_FEE = 4
-    CONVERSION_RATE = 1 / 1500
+    SHOW_UP_FEE = 4.0
+    CONVERSION_RATE = 1 / 1250
     PROLIFIC_COMPLETION_URL = 'https://app.prolific.com/submissions/complete?cc=C21CTUY6'
 
     # Comprehension Questions - 8 Multiple Choice Questions
@@ -688,7 +688,7 @@ class GamePage(Page):
 class GameResultPage(Page):
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS and not player.in_round(1).question_failed
+        return player.round_number == C.NUM_ROUNDS
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -707,13 +707,11 @@ class GameResultPage(Page):
         num_disruptions = sum(1 for r in all_results if r.is_disrupted)
 
         # Calculate the payoff relative to performance
-        performance_payment = float(final_profit) * C.CONVERSION_RATE
-        performance_payment = round(performance_payment, 1)
+        performance_payment = round(float(final_profit) * C.CONVERSION_RATE, 1)
         if performance_payment <= 0: performance_payment = 0
 
         # Calculate the total game payment
-        total_payment = C.SHOW_UP_FEE + performance_payment
-        total_payment = round(total_payment, 1)
+        total_payment = round(C.SHOW_UP_FEE + performance_payment, 1)
 
         player.participant.payoff = performance_payment
 
@@ -748,7 +746,7 @@ class ExtraTask1(Page):
 
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS and not player.in_round(1).question_failed
+        return player.round_number == C.NUM_ROUNDS
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
@@ -796,7 +794,7 @@ class ExtraTask2 (Page):
 
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS and not player.in_round(1).question_failed
+        return player.round_number == C.NUM_ROUNDS
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
@@ -839,7 +837,7 @@ class ExtraTask2 (Page):
 class ExtraTaskResult(Page):
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS and not player.in_round(1).question_failed
+        return player.round_number == C.NUM_ROUNDS
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -912,7 +910,7 @@ class DemographicPage(Page):
 
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS and not player.in_round(1).question_failed
+        return player.round_number == C.NUM_ROUNDS
 
     @staticmethod
     def live_method(player, data):
@@ -1028,7 +1026,7 @@ class DemographicPage(Page):
 class EndingPage(Page):
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS and not player.in_round(1).question_failed
+        return player.round_number == C.NUM_ROUNDS
 
     @staticmethod
     def vars_for_template(player: Player):
