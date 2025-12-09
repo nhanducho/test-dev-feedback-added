@@ -11,10 +11,10 @@ class C(BaseConstants):
     NAME_IN_URL = 'experiment_1_prolific'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 100
-    INITIAL_PROFIT = 10000 #(base) total profit for 100 rounds
-    GROSS_PROFIT = 100 #(base) gross profit every round
-    DISRUPTION_COST = 2000 #(base) disruption impact
-    BASIC_PROBABILITY = 5 #(base) disruption probability
+    INITIAL_PROFIT = 10000
+    GROSS_PROFIT = 100
+    DISRUPTION_COST = 2000
+    BASIC_PROBABILITY = 5
     SHOW_UP_FEE = 4.0
     CONVERSION_RATE = 1 / 1250
     PROLIFIC_COMPLETION_URL = 'https://app.prolific.com/submissions/complete?cc=C21CTUY6'
@@ -106,7 +106,7 @@ class C(BaseConstants):
     ]
 
     # Demographic questionnaire
-    BIRTH_YEARS = list(range(1970, 2011))  # 1980 to 2010
+    BIRTH_YEARS = list(range(1960, 2010))
 
     GENDER_CHOICES = [
         ['male', 'Male'],
@@ -1021,80 +1021,6 @@ class DemographicPage(Page):
                                             payment_duration + question_duration + total_game_duration +
                                             extra_task1_duration + extra_task2_duration + demographic_duration)
         last_round_player.total_duration_excluding_results = round(total_duration_excluding_results, 3)
-
-
-class EndingPage(Page):
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        all_players = player.in_all_rounds()
-        all_results = []
-        for p in all_players:
-            player_results = CombinedResult.filter(player=p)
-            all_results.extend(player_results)
-
-        all_results = sorted(all_results, key=lambda x: x.player.round_number)
-
-        total_spending = sum(r.spending for r in all_results)
-        total_disruption_cost = sum(r.cost_of_disruption for r in all_results)
-        final_profit = all_results[-1].expected_profit if all_results else C.INITIAL_PROFIT
-
-        # Calculate game payments
-        performance_payment = float(final_profit) * C.CONVERSION_RATE
-        performance_payment = round(performance_payment, 1)
-        if performance_payment <= 0: performance_payment = 0
-        spending_game_payment = C.SHOW_UP_FEE + performance_payment
-
-        # Calculate tasks payment
-        task1_payment = round(player.task1_payoff * C.CONVERSION_RATE, 1)
-        task2_payment = round(player.task2_payoff * C.CONVERSION_RATE, 1)
-        tasks_total_payment = round(task1_payment + task2_payment, 1)
-
-        # Total payment
-        total_payment = round(spending_game_payment + tasks_total_payment, 1)
-
-        # Get demographic data
-        gender_labels = dict(C.GENDER_CHOICES)
-        ethnicity_labels = dict(C.ETHNICITY_CHOICES)
-        education_labels = dict(C.EDUCATION_CHOICES)
-
-        return dict(
-            # Spending game
-            final_profit=final_profit,
-            initial_profit=C.INITIAL_PROFIT,
-            show_up_fee=C.SHOW_UP_FEE,
-            performance_payment=performance_payment,
-            spending_game_payment=spending_game_payment,
-
-            # Task 1
-            task1_selected_decision=player.task1_selected_decision,
-            task1_random_number=player.task1_random_number,
-            task1_choice=getattr(player, f'task1_d{player.task1_selected_decision}'),
-            task1_payoff=player.task1_payoff,
-            task1_payment=task1_payment,
-
-            # Task 2
-            task2_selected_gamble=player.task2_selected_gamble,
-            task2_choice=getattr(player, f'task2_g{player.task2_selected_gamble}'),
-            task2_outcome=player.task2_outcome,
-            task2_payoff=player.task2_payoff,
-            task2_payment=task2_payment,
-
-            # Totals
-            tasks_total_payment=tasks_total_payment,
-            total_payment=total_payment,
-
-            # Demographics
-            birth_year=player.birth_year,
-            gender=gender_labels.get(player.gender, player.gender) if player.gender else 'Not provided',
-            ethnicity=ethnicity_labels.get(player.ethnicity, player.ethnicity) if player.ethnicity else 'Not provided',
-            education_status=education_labels.get(player.education_status,
-                                                  player.education_status) if player.education_status else 'Not provided',
-            scr_importance=player.scr_importance if player.scr_importance else 'Not provided',
-        )
 
 
 class ProlificRedirect(Page):

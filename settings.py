@@ -4,7 +4,14 @@ SESSION_CONFIGS = [
     dict(
         name='experiment_1_prolific',
         app_sequence=['experiment_1_prolific'],
-        num_demo_participants=50,
+        num_demo_participants=5,
+        participation_fee=4.00,
+    ),
+    dict(
+        name='experiment_1_lab',
+        app_sequence=['experiment_1_lab'],
+        num_demo_participants=10,
+        participation_fee=3.00,
     ),
 ]
 
@@ -16,7 +23,6 @@ SESSION_CONFIGS = [
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.0,
     real_world_currency_decimal_places=1,
-    participation_fee=4.00,
     doc=""
 )
 

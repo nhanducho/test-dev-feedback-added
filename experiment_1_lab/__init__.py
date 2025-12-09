@@ -8,16 +8,15 @@ Supply Chain Resilience Spending Game
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'experiment_1_prolific'
+    NAME_IN_URL = 'experiment_1_lab'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 100
-    INITIAL_PROFIT = 10000 #(base) total profit for 100 rounds
-    GROSS_PROFIT = 100 #(base) gross profit every round
-    DISRUPTION_COST = 2000 #(base) disruption impact
-    BASIC_PROBABILITY = 5 #(base) disruption probability
-    SHOW_UP_FEE = 4.0
+    INITIAL_PROFIT = 10000
+    GROSS_PROFIT = 100
+    DISRUPTION_COST = 2000
+    BASIC_PROBABILITY = 5
+    SHOW_UP_FEE = 3.0
     CONVERSION_RATE = 1 / 1250
-    PROLIFIC_COMPLETION_URL = 'https://app.prolific.com/submissions/complete?cc=C21CTUY6'
 
     # Comprehension Questions - 8 Multiple Choice Questions
     COMP_QUESTIONS_MC = [
@@ -106,7 +105,7 @@ class C(BaseConstants):
     ]
 
     # Demographic questionnaire
-    BIRTH_YEARS = list(range(1970, 2011))  # 1980 to 2010
+    BIRTH_YEARS = list(range(1980, 2011))
 
     GENDER_CHOICES = [
         ['male', 'Male'],
@@ -1097,17 +1096,6 @@ class EndingPage(Page):
         )
 
 
-class ProlificRedirect(Page):
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        return dict(
-            completion_url=C.PROLIFIC_COMPLETION_URL
-        )
-
 def custom_export_game(players):
     players = sorted(players, key=lambda p: (p.id_in_group, p.round_number))
 
@@ -1249,4 +1237,4 @@ def custom_export_time_tracking(players):
             ]
 
 
-page_sequence = [WelcomingPage, InstructionPage1, InstructionPage2, PaymentInfo, QuestionPage, GamePage, GameResultPage, ExtraTask1, ExtraTask2, ExtraTaskResult, DemographicPage, ProlificRedirect]
+page_sequence = [WelcomingPage, InstructionPage1, InstructionPage2, PaymentInfo, QuestionPage, GamePage, GameResultPage, ExtraTask1, ExtraTask2, ExtraTaskResult, DemographicPage, EndingPage]
