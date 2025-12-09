@@ -5,7 +5,7 @@ SESSION_CONFIGS = [
         name='experiment_1_prolific',
         app_sequence=['experiment_1_prolific'],
         num_demo_participants=5,
-        participation_fee=4.00,
+        participation_fee=3.00,
     ),
     dict(
         name='experiment_1_lab',

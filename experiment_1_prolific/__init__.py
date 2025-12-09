@@ -15,7 +15,7 @@ class C(BaseConstants):
     GROSS_PROFIT = 100
     DISRUPTION_COST = 2000
     BASIC_PROBABILITY = 5
-    SHOW_UP_FEE = 4.0
+    SHOW_UP_FEE = 3.0
     CONVERSION_RATE = 1 / 1250
     PROLIFIC_COMPLETION_URL = 'https://app.prolific.com/submissions/complete?cc=C21CTUY6'
 
