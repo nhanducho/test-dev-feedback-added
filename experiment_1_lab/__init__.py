@@ -8,7 +8,7 @@ Supply Chain Resilience Spending Game
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'experiment_1'
+    NAME_IN_URL = 'experiment_1_prolific'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 100
     INITIAL_PROFIT = 10000 #(base) total profit for 100 rounds
@@ -1100,7 +1100,7 @@ class EndingPage(Page):
 class ProlificRedirect(Page):
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS and not player.in_round(1).question_failed
+        return player.round_number == C.NUM_ROUNDS
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -1113,6 +1113,7 @@ def custom_export_game(players):
 
     yield [
         'player_id',
+        'player_code',
         'round_number',
         'spending',
         'is_disrupted',
@@ -1128,6 +1129,7 @@ def custom_export_game(players):
         for r in results:
             yield [
                 p.id_in_group,
+                p.participant.code,
                 p.round_number,
                 r.spending,
                 1 if r.is_disrupted else 0,
@@ -1142,7 +1144,7 @@ def custom_export_tasks(players):
     players = sorted(players, key=lambda p: (p.id_in_group))
 
     yield [
-        'player_id', 'task1_d1', 'task1_d2', 'task1_d3', 'task1_d4', 'task1_d5',
+        'player_id', 'player_code', 'task1_d1', 'task1_d2', 'task1_d3', 'task1_d4', 'task1_d5',
         'task1_d6', 'task1_d7', 'task1_d8', 'task1_d9', 'task1_d10',
         'task1_selected_decision', 'task1_random_number', 'task1_payoff',
         'task2_g1', 'task2_g2', 'task2_g3', 'task2_g4', 'task2_g5', 'task2_g6',
@@ -1152,6 +1154,7 @@ def custom_export_tasks(players):
         if p.task1_selected_decision is not None:
             yield [
                 p.id_in_group,
+                p.participant.code,
                 p.task1_d1,
                 p.task1_d2,
                 p.task1_d3,
@@ -1181,6 +1184,7 @@ def custom_export_demographics(players):
 
     yield [
         'player_id',
+        'player_code',
         'birth_year',
         'gender',
         'ethnicity',
@@ -1192,6 +1196,7 @@ def custom_export_demographics(players):
         if p.task1_selected_decision is not None:
             yield [
                 p.id_in_group,
+                p.participant.code,
                 p.birth_year,
                 p.gender,
                 p.ethnicity,
@@ -1206,6 +1211,7 @@ def custom_export_time_tracking(players):
 
     yield [
         'player_id',
+        'player_code',
         'welcoming_duration',
         'instruction1_duration',
         'instruction2_duration',
@@ -1226,6 +1232,7 @@ def custom_export_time_tracking(players):
         if (p.total_duration or 0) > 0 or (p.demographic_duration or 0) > 0:
             yield [
                 p.id_in_group,
+                p.participant.code,
                 p.welcoming_duration,
                 p.instruction1_duration,
                 p.instruction2_duration,
