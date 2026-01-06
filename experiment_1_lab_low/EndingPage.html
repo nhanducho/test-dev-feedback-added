@@ -1,0 +1,193 @@
+{{ block content }}
+
+<style>
+    .otree-title {
+        display: none !important;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .otree-body {
+        margin-top: 0;
+        max-width: 100%;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #F5F5F5;
+        padding: 20px;
+    }
+    
+    .results-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px;
+        background-color: #FFFFFF;
+        border: 3px solid #000000;
+    }
+    
+    .main-title {
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: #000000;
+        letter-spacing: 2px;
+    }
+    
+    .divider {
+        border: none;
+        border-top: 2px solid #e0e0e0;
+        margin: 30px 0;
+    }
+    
+    .section-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #000000;
+    }
+    
+    .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+    }
+    
+    .results-table td {
+        padding: 12px 15px;
+        border: none;
+        border-bottom: 2px solid #e0e0e0;
+        font-size: 16px;
+    }
+    
+    .results-table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .results-table td:first-child {
+        font-weight: normal;
+        color: #000000;
+    }
+    
+    .results-table td:last-child {
+        text-align: right;
+        font-weight: normal;
+    }
+    
+    .results-table tr.highlight-row {
+        background-color: #f0f0f0;
+    }
+    
+    .results-table tr.highlight-row td {
+        font-weight: bold;
+    }
+    
+    .results-table tr.total-row {
+        background-color: #d4edda;
+    }
+    
+    .results-table tr.total-row td {
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    .completion-message {
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+        color: rgba(40, 167, 69, 0.77);
+        padding: 20px;
+        background-color: #d4edda;
+        border: 3px solid rgb(40, 167, 69);
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+    
+    .submit-container {
+        text-align: center;
+        margin-top: 35px;
+    }
+    
+    
+    @media (max-width: 768px) {
+        .results-container {
+            padding: 30px 20px;
+        }
+        
+        .main-title {
+            font-size: 26px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+        }
+        
+        .results-table td {
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        .results-table tr.total-row td {
+            font-size: 16px;
+        }
+        
+        .thank-you, .completion-message {
+            font-size: 16px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .results-container {
+            padding: 20px 15px;
+        }
+        
+        .main-title {
+            font-size: 22px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+        }
+        
+        .otree-btn-next {
+            width: 100%;
+            padding: 15px 30px !important;
+        }
+    }
+</style>
+
+<div class="results-container">
+    <h1 class="main-title">EXPERIMENT COMPLETED!</h1>
+    <!-- Final Summary -->
+    <h2 class="section-title">Payment Breakdown</h2>
+    <table class="results-table">
+        <tr>
+            <td>Spending Game Payment:</td>
+            <td>€{{ spending_game_payment }}</td>
+        </tr>
+        <tr>
+            <td>Task 1 Payment:</td>
+            <td>€{{ task1_payment }}</td>
+        </tr>
+        <tr>
+            <td>Task 2 Payment:</td>
+            <td>€{{ task2_payment }}</td>
+        </tr>
+        <tr class="total-row">
+            <td>YOUR TOTAL PAYMENT:</td>
+            <td>€{{ total_payment }}</td>
+        </tr>
+    </table>
+    
+    <div class="completion-message">
+        Thank you for your participation!
+    </div>
+
+</div>
+
+{{ endblock }}

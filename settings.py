@@ -2,17 +2,29 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='experiment_1_prolific',
-        app_sequence=['experiment_1_prolific'],
+        name='experiment_1_lab_low',
+        app_sequence=['experiment_1_lab_low'],
+        num_demo_participants=10,
+        participation_fee=3.00,
+    ),
+    dict(
+        name='experiment_1_lab_high',
+        app_sequence=['experiment_1_lab_high'],
+        num_demo_participants=10,
+        participation_fee=3.00,
+    ),
+    dict(
+        name='experiment_1_prolific_low',
+        app_sequence=['experiment_1_prolific_low'],
         num_demo_participants=5,
         participation_fee=3.00,
     ),
     dict(
-        name='experiment_1_lab',
-        app_sequence=['experiment_1_lab'],
-        num_demo_participants=10,
+        name='experiment_1_prolific_high',
+        app_sequence=['experiment_1_prolific_high'],
+        num_demo_participants=5,
         participation_fee=3.00,
-    ),
+    )
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -28,8 +40,16 @@ SESSION_CONFIG_DEFAULTS = dict(
 
 ROOMS = [
     dict(
-        name='exp_room',
-        display_name='Experiment 1 Room',
+        name='exp_room_1',
+        display_name='Experiment 1 Room 1',
+    ),
+    dict(
+        name='exp_room_2',
+        display_name='Experiment 1 Room 2',
+    ),
+    dict(
+        name='exp_room_3',
+        display_name='Experiment 1 Room 3',
     )
 ]
 

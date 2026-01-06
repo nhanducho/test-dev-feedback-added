@@ -1,0 +1,311 @@
+{{ block content }}
+
+<style>
+        .otree-title {
+            display: none !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .otree-body {
+            max-width: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            padding: 20px;
+        }
+
+        .welcoming-container {
+            background-color: #FFFFFF;
+            border: 3px solid #000000;
+            border-radius: 0;
+            padding: 40px 60px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 30px auto;
+        }
+
+        .content-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #000000;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .highlight {
+            font-weight: bold;
+        }
+
+        .start-btn-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 35px;
+        gap: 20px;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .data-table thead tr {
+            background-color: transparent;
+        }
+        .data-table th,
+        .data-table td {
+            border: 1px solid #000000;
+            padding: 12px;
+            text-align: center;
+        }
+        .data-table th {
+            font-weight: normal;
+        }
+        .data-table tbody tr {
+            background-color: transparent;
+            font-weight: bold;
+        }
+        .row-header {
+            font-weight: bold;
+        }
+
+        .otree-btn-next {
+            background: #000000 !important;
+            color: white !important;
+            border: none !important;
+            padding: 18px 50px !important;
+            font-size: 18px !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+        }
+
+        .otree-btn-next:hover {
+            background: #333333 !important;
+            transform: translateY(-2px);
+        }
+
+        /* Back button styling */
+        .btn-outline-secondary,
+        .otree-btn-back {
+        background: transparent !important;
+        color: #000000 !important;
+        border: 3px solid #000000 !important;
+        padding: 18px 50px !important;
+        font-size: 18px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+        margin-right: 15px !important;
+        }
+
+        .btn-outline-secondary:hover,
+        .otree-btn-back:hover {
+        background: #000000 !important;
+        color: white !important;
+        transform: translateY(-2px);
+        }
+
+        .submit-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 35px;
+        gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .welcoming-container {
+                padding: 40px 30px;
+            }
+
+            .content-text {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+
+            .otree-btn-next {
+                padding: 15px 40px !important;
+                font-size: 16px !important;
+            }
+
+            .otree-btn-back {
+                width: 100%;
+                padding: 15px 30px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcoming-container {
+                padding: 30px 20px;
+            }
+
+            .content-text {
+                font-size: 15px;
+            }
+
+            .otree-btn-next {
+                width: 100%;
+                padding: 15px 30px !important;
+                font-size: 15px !important;
+            }
+
+            .otree-btn-back {
+                width: 100%;
+                padding: 15px 30px !important;
+            }
+        }
+</style>
+
+<div class="welcoming-container">
+    <p class="content-text" style="text-align: center;">
+        <span class="highlight">Supply Chain Disruptions</span>
+    </p>
+    <p class="content-text">
+        Your corporation is constantly at risk of being affected by supply chain disruptions (e.g., a flood in your
+        factory, shipping route blockage, or political unrest). Suppose your business is disrupted or indirectly affected
+        by adverse events (e.g., your suppliers are shut down). In that case, you may fail to meet your customers'
+        demands and consequently incur substantial costs due to declining sales and losing customers to your competitors.
+        For example, imagine your company has signed deals with various customers to supply them with products you produce,
+        and these deals bring you 100 ECU of gross profit once all deals are fulfilled. Since you believe there will be
+        no disruption in this round, you decide not to spend anything on SC resilience (0 ECU). It turns out that you are
+        right, which helps your company earn the largest possible net profit of 100 ECU. Alternatively, your speculation
+        proves to be incorrect, and your business is disrupted. In this case, you cannot fulfill your customer obligations
+        due to a zero-inventory buffer, "just-in-time" manufacturing, and consolidated procurement, resulting in the most
+        significant costs for your company related to SC disruptions.
+    </p>
+    <p class="content-text">
+        <b>
+            Disruptions are unpredictable, but you do know that without SC resilience (zero spending),
+            the probability of a disruption occurring is <u>20%</u> and it costs you <u>500 ECU</u> once a disruption
+            occurs.
+        </b>
+        Keep in mind that the disruption occurring (or not) in one round is <u>independent and does not influence</u>
+        the result of any other rounds.
+    </p>
+
+    <p class="content-text" style="text-align: center;">
+        <span class="highlight">How Supply Chain Resilience Spending Works</span>
+    </p>
+    <p class="content-text">
+        SC resilience is widely regarded as one of the best strategies that enables your company to proactively prepare
+        for unforeseen disruptions. In this experiment, <u>spending on SC resilience allows you to reduce both the probability
+        and the financial impact of possible disruptions</u>. The rule is simple: <b>the higher you spend on SC resilience,
+        the lower the likelihood of disruptions occurring, as well as the lower the disruption impacts if disruptions
+        do happen</b>. For example, if you decide to spend 20 ECU on SC resilience, the new probability of disruption
+        occurring is now 16%, and the new impact in the event of disruption is 400 ECU. You can also choose not to spend
+        on SC resilience by inserting 0 ECU, which means that you accept the disruption probability of 20% and the potential
+        loss of 500 ECU. Conversely, you can decide to spend up to a maximum of 100 ECU to eliminate all risks of SC
+        disruptions (i.e., 0% disruption probability, 0 ECU of impact). The revised probability and revised impact of
+        disruptions corresponding to the particular amount of spending are shown in the table below. During the experiment,
+        a decision support tool is always available to help you calculate the <u>exact</u> revised probability and
+        revised impact of disruptions based on your specific spending amount.
+    </p>
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>Spending (ECU)</th>
+                <th>0</th>
+                <th>10</th>
+                <th>20</th>
+                <th>30</th>
+                <th>40</th>
+                <th>50</th>
+                <th>60</th>
+                <th>70</th>
+                <th>80</th>
+                <th>90</th>
+                <th>100</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="row-header">Revised Probability</td>
+                <td>20%</td>
+                <td>18%</td>
+                <td>16%</td>
+                <td>14%</td>
+                <td>12%</td>
+                <td>10%</td>
+                <td>8%</td>
+                <td>6%</td>
+                <td>4%</td>
+                <td>2%</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td class="row-header">Revised Impact</td>
+                <td>500</td>
+                <td>450</td>
+                <td>400</td>
+                <td>350</td>
+                <td>300</td>
+                <td>250</td>
+                <td>200</td>
+                <td>150</td>
+                <td>100</td>
+                <td>50</td>
+                <td>0</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="content-text" style="text-align: center;">
+        <span class="highlight">Your Objective</span>
+    </p>
+    <p class="content-text">
+        Your goal in this experiment is to maximize your profit by deciding the right amount to spend on SC resilience
+        that serves you best in preventing SC disruptions, while not eating up your profit due to excessive spending.
+        Please note that your final profit will be converted to your actual bonus and added to your show-up fee.
+    </p>
+
+    <div class="submit-container">
+        {{ back_button }}
+        {{ next_button }}
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        startTime = Date.now();
+        liveSend({'page_loaded': startTime});
+    };
+
+    function getTime() {
+        endTime = Date.now();
+        liveSend({'form_submitted': endTime});
+    };
+
+    // Intercept form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const nextButton = document.querySelector('.otree-btn-next');
+        if (nextButton) {
+            nextButton.addEventListener('click', function(e) {
+                getTime();
+            });
+        }
+    });
+</script>
+
+{{ endblock }}
+
+

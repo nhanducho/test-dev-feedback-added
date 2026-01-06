@@ -1,0 +1,23 @@
+{{ block title }}Redirecting...{{ endblock }}
+
+{{ block content }}
+    <p>Thank you for completing the study.</p>
+    <p>You are now being redirected back to Prolific. This may take a few seconds.</p>
+
+    <script>
+        // automatic redirect to Prolific completion URL
+        window.location.href = "{{ completion_url }}";
+    </script>
+
+    <noscript>
+        <p>
+            JavaScript seems to be disabled.
+            Please click the link below to return to Prolific:
+        </p>
+        <p>
+            <a href="{{ completion_url }}" target="_blank">
+                Click here to complete the study on Prolific
+            </a>
+        </p>
+    </noscript>
+{{ endblock }}

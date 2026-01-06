@@ -8,7 +8,7 @@ Supply Chain Resilience Spending Game
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'experiment_1_lab'
+    NAME_IN_URL = 'test_without_quiz_rounding_10'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 100
     INITIAL_PROFIT = 10000
@@ -16,130 +16,7 @@ class C(BaseConstants):
     DISRUPTION_COST = 2000
     BASIC_PROBABILITY = 5
     SHOW_UP_FEE = 3.0
-    CONVERSION_RATE = 1 / 1250
-
-    # Comprehension Questions - 8 Multiple Choice Questions
-    COMP_QUESTIONS_MC = [
-        {
-            'question': 'How many Rounds do you play in this experiment?',
-            'options': [
-                {'text': '20 rounds'},
-                {'text': '100 rounds', 'correct': True},
-                {'text': '120 rounds'}
-            ]
-        },
-        {
-            'question': 'How much Gross profit do you earn each round?',
-            'options': [
-                {'text': '1000 ECU'},
-                {'text': '100 ECU', 'correct': True},
-                {'text': '200 ECU'}
-            ]
-        },
-        {
-            'question': 'What is the Probability of disruptions when your SC resilience spending is zero?',
-            'options': [
-                {'text': '5%', 'correct': True},
-                {'text': '4%'},
-                {'text': '4.5%'}
-            ]
-        },
-        {
-            'question': 'What is the Impact of disruptions when your SC resilience spending is zero?',
-            'options': [
-                {'text': '1000 ECU'},
-                {'text': '2000 ECU', 'correct': True},
-                {'text': '100 ECU'}
-            ]
-        },
-        {
-            'question': 'What is your Net profit when you spend 20 ECU on SC resilience and no disruption occurs?',
-            'options': [
-                {'text': '80 ECU', 'correct': True},
-                {'text': '-20 ECU'},
-                {'text': '-120 ECU'}
-            ]
-        },
-        {
-            'question': 'What is the Maximum amount of spending you can make?',
-            'options': [
-                {'text': '50 ECU'},
-                {'text': '2000 ECU'},
-                {'text': '100 ECU', 'correct': True}
-            ]
-        },
-        {
-            'question': 'What is the Probability of disruptions when your SC resilience spending is 100 ECU?',
-            'options': [
-                {'text': '5%'},
-                {'text': '0%', 'correct': True},
-                {'text': '0.5%'}
-            ]
-        },
-        {
-            'question': 'What is the Impact of disruptions when your SC resilience spending is 100 ECU?',
-            'options': [
-                {'text': '2000 ECU'},
-                {'text': '100 ECU'},
-                {'text': '0 ECU', 'correct': True}
-            ]
-        }
-    ]
-
-    # Comprehension Questions - 2 True/False Questions
-    COMP_QUESTIONS_TF = [
-        {
-            'question': 'You can decide to spend on SC resilience freely between 0 and 100.',
-            'options': [
-                {'text': 'True', 'correct': True},
-                {'text': 'False'}
-            ]
-        },
-        {
-            'question': 'After spending 50 ECU on SC resilience, you can also be at risk of disruptions.',
-            'options': [
-                {'text': 'True', 'correct': True},
-                {'text': 'False'}
-            ]
-        }
-    ]
-
-    # Demographic questionnaire
-    BIRTH_YEARS = list(range(1980, 2011))
-
-    GENDER_CHOICES = [
-        ['male', 'Male'],
-        ['female', 'Female'],
-        ['other', 'Other'],
-        ['prefer_not', 'Prefer not to say']
-    ]
-
-    ETHNICITY_CHOICES = [
-        ['asian', 'Asian'],
-        ['european', 'European'],
-        ['african', 'African'],
-        ['american', 'American'],
-        ['latin_american', 'Latin American'],
-        ['mixed', 'Mixed background']
-    ]
-
-    EDUCATION_CHOICES = [
-        ['first_year', 'First-year undergraduate student'],
-        ['second_year', 'Second-year undergraduate student'],
-        ['third_final', 'Third-year/final-year undergraduate student'],
-        ['masters', 'Masters student'],
-        ['doctoral', 'Doctoral/PhD student']
-    ]
-
-    SCR_IMPORTANCE_CHOICES = [
-        [1, '1'],
-        [2, '2'],
-        [3, '3'],
-        [4, '4'],
-        [5, '5'],
-        [6, '6'],
-        [7, '7']
-    ]
+    CONVERSION_RATE = 1 / 1500
 
 
 class Subsession(BaseSubsession):
@@ -160,81 +37,6 @@ class Player(BasePlayer):
     round_profit = models.FloatField(initial=0)
     expected_profit = models.IntegerField(initial=C.INITIAL_PROFIT)
     round_calculated = models.BooleanField(initial=False)
-
-    # Comprehension question fields
-    def make_field():
-        return models.StringField(
-            blank=True,
-            choices=[['a', 'a'], ['b', 'b'], ['c', 'c']],
-            widget=widgets.RadioSelect
-        )
-
-    # Comprehension questions - 5 random questions drawn from 10
-    comp_q1 = make_field()
-    comp_q2 = make_field()
-    comp_q3 = make_field()
-    comp_q4 = make_field()
-    comp_q5 = make_field()
-    question_attempts = models.IntegerField(initial=0)
-    question_failed = models.BooleanField(initial=False)
-    current_question_indices = models.StringField(initial='')
-
-    # Extra task 1 fields - 10 decisions
-    task1_d1 = models.StringField(choices=[['A', 'A'], ['B', 'B']], widget=widgets.RadioSelect)
-    task1_d2 = models.StringField(choices=[['A', 'A'], ['B', 'B']], widget=widgets.RadioSelect)
-    task1_d3 = models.StringField(choices=[['A', 'A'], ['B', 'B']], widget=widgets.RadioSelect)
-    task1_d4 = models.StringField(choices=[['A', 'A'], ['B', 'B']], widget=widgets.RadioSelect)
-    task1_d5 = models.StringField(choices=[['A', 'A'], ['B', 'B']], widget=widgets.RadioSelect)
-    task1_d6 = models.StringField(choices=[['A', 'A'], ['B', 'B']], widget=widgets.RadioSelect)
-    task1_d7 = models.StringField(choices=[['A', 'A'], ['B', 'B']], widget=widgets.RadioSelect)
-    task1_d8 = models.StringField(choices=[['A', 'A'], ['B', 'B']], widget=widgets.RadioSelect)
-    task1_d9 = models.StringField(choices=[['A', 'A'], ['B', 'B']], widget=widgets.RadioSelect)
-    task1_d10 = models.StringField(choices=[['A', 'A'], ['B', 'B']], widget=widgets.RadioSelect)
-    task1_selected_decision = models.IntegerField()
-    task1_random_number = models.IntegerField()
-    task1_payoff = models.IntegerField()
-
-    # Extra task 2 fields - 6 gambles
-    task2_g1 = models.StringField(choices=[['Accept', 'Accept'], ['Reject', 'Reject']], widget=widgets.RadioSelect)
-    task2_g2 = models.StringField(choices=[['Accept', 'Accept'], ['Reject', 'Reject']], widget=widgets.RadioSelect)
-    task2_g3 = models.StringField(choices=[['Accept', 'Accept'], ['Reject', 'Reject']], widget=widgets.RadioSelect)
-    task2_g4 = models.StringField(choices=[['Accept', 'Accept'], ['Reject', 'Reject']], widget=widgets.RadioSelect)
-    task2_g5 = models.StringField(choices=[['Accept', 'Accept'], ['Reject', 'Reject']], widget=widgets.RadioSelect)
-    task2_g6 = models.StringField(choices=[['Accept', 'Accept'], ['Reject', 'Reject']], widget=widgets.RadioSelect)
-    task2_selected_gamble = models.IntegerField()
-    task2_outcome = models.IntegerField()
-    task2_payoff = models.IntegerField()
-
-    # Demographic questionnaire fields - 5 questions
-    birth_year = models.IntegerField(
-        label="What is your year of birth?",
-        choices=[[year, str(year)] for year in C.BIRTH_YEARS],
-        blank=False
-    )
-    gender = models.StringField(
-        label="What is your gender?",
-        choices=C.GENDER_CHOICES,
-        widget=widgets.RadioSelect,
-        blank=False
-    )
-    ethnicity = models.StringField(
-        label="Which of the following options best describes your ethnic background?",
-        choices=C.ETHNICITY_CHOICES,
-        widget=widgets.RadioSelect,
-        blank=False
-    )
-    education_status = models.StringField(
-        label="Which of the following options best describes your current educational status?",
-        choices=C.EDUCATION_CHOICES,
-        widget=widgets.RadioSelect,
-        blank=False
-    )
-    scr_importance = models.IntegerField(
-        label="Please indicate the extent to which you think Supply Chain Resilience (or Supply Chain Risk Management) is important nowadays?",
-        choices=C.SCR_IMPORTANCE_CHOICES,
-        widget=widgets.RadioSelectHorizontal,
-        blank=False
-    )
 
     # Time tracking fields for each page
     welcoming_page_loaded = models.StringField(initial='')
@@ -354,136 +156,13 @@ class PaymentInfo(Page):
             player.payment_form_submitted = prev + str(data['form_submitted']) + ", "
 
 
-class QuestionPage(Page):
-    form_model = 'player'
-    form_fields = ['comp_q1', 'comp_q2', 'comp_q3', 'comp_q4', 'comp_q5']
-    allow_back_button = True
-
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number == 1 and not player.question_failed
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        attempt_number = player.question_attempts + 1
-        # Select 4 random questions from 8 multiple choice questions
-        mc_indices = random.sample(range(len(C.COMP_QUESTIONS_MC)), 4)
-
-        # Select 1 random question from 2 True/False questions
-        tf_index = random.randint(0, len(C.COMP_QUESTIONS_TF) - 1)
-
-        # Get selected questions and shuffle their options
-        selected_questions = []
-        option_mappings = []
-
-        # Process MC questions
-        for i in mc_indices:
-            original_q = C.COMP_QUESTIONS_MC[i]
-
-            # Shuffle options
-            shuffled_options = original_q['options'].copy()
-            random.shuffle(shuffled_options)
-
-            # Convert to dict format for template (a, b, c)
-            options_dict = {}
-            correct_key = None
-            keys = ['a', 'b', 'c']
-
-            for j, opt in enumerate(shuffled_options):
-                options_dict[keys[j]] = opt['text']
-                if opt.get('correct', False):
-                    correct_key = keys[j]
-
-            selected_questions.append({
-                'question': original_q['question'],
-                'options': options_dict,
-            })
-
-            option_mappings.append(correct_key)
-
-        # Process TF question
-        original_tf = C.COMP_QUESTIONS_TF[tf_index]
-
-        # Shuffle True/False
-        shuffled_tf = original_tf['options'].copy()
-        random.shuffle(shuffled_tf)
-
-        tf_options_dict = {}
-        tf_correct_key = None
-
-        for j, opt in enumerate(shuffled_tf):
-            tf_options_dict[['a', 'b'][j]] = opt['text']
-            if opt.get('correct', False):
-                tf_correct_key = ['a', 'b'][j]
-
-        selected_questions.append({
-            'question': original_tf['question'],
-            'options': tf_options_dict,
-        })
-
-        option_mappings.append(tf_correct_key)
-
-        # Store indices and correct answer mappings for validation
-        indices_str = ','.join(map(str, mc_indices)) + f',TF{tf_index}'
-        mappings_str = ','.join(option_mappings)
-        player.current_question_indices = indices_str + '|' + mappings_str
-
-        return dict(
-            questions=selected_questions,
-            attempt_number=attempt_number,
-        )
-
-    @staticmethod
-    def error_message(player: Player, values):
-        # Check if all questions are answered
-        unanswered = []
-        for i in range(1, 6):
-            field_name = f'comp_q{i}'
-            if not values.get(field_name):
-                unanswered.append(str(i))
-
-        if unanswered:
-            return "Please answer all questions before submitting"
-
-        # Parse current question indices and mappings
-        parts = player.current_question_indices.split('|')
-        indices_str = parts[0]
-        mappings_str = parts[1]
-
-        correct_keys = mappings_str.split(',')
-
-        # Check answers
-        errors = []
-
-        # Check all 5 questions using the stored correct keys
-        for i in range(1, 6):
-            field_name = f'comp_q{i}'
-            if values[field_name] != correct_keys[i - 1]:
-                errors.append(str(i))
-
-        if errors:
-            player.question_attempts += 1
-            return f"Some answers are incorrect. Please try again. (Attempt {player.question_attempts + 1})"
-
-    @staticmethod
-    def live_method(player, data):
-        if "page_loaded" in data:
-            prev = player.field_maybe_none('question_page_loaded') or ''
-            player.question_page_loaded = prev + str(data['page_loaded']) + ", "
-        if "form_submitted" in data:
-            prev = player.field_maybe_none('question_form_submitted') or ''
-            player.question_form_submitted = prev + str(data['form_submitted']) + ", "
-
-
 class GamePage(Page):
     form_model = 'player'
     form_fields = ['money_input']
 
     @staticmethod
     def is_displayed(player: Player):
-        if player.round_number == 1:
-            return not player.question_failed
-        return True
+        return player.round_number > 0
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -550,15 +229,11 @@ class GamePage(Page):
     @staticmethod
     def live_method(player: Player, data):
         if "page_loaded" in data:
-            prev = player.field_maybe_none('game_page_loaded') or ''
-            player.game_page_loaded = prev + str(data['page_loaded']) + ", "
+            player.game_page_loaded = player.field_maybe_none('game_page_loaded') + str(data['page_loaded']) + ", "
         if "form_submitted" in data:
-            prev = player.field_maybe_none('game_form_submitted') or ''
-            player.game_form_submitted = prev + str(data['form_submitted']) + ", "
-        action = data.get('action')
-        if not action:
-            return
-        if data['action'] == 'calculate_result':
+            player.game_form_submitted = player.field_maybe_none('game_form_submitted') + str(
+                data['form_submitted']) + ", "
+        if 'action' in data and data['action'] == 'calculate_result':
             spending = data['spending']
 
             if spending < 0 or spending > 100:
@@ -707,7 +382,6 @@ class GameResultPage(Page):
 
         # Calculate the payoff relative to performance
         performance_payment = round(float(final_profit) * C.CONVERSION_RATE, 1)
-        if performance_payment <= 0: performance_payment = 0
 
         # Calculate the total game payment
         total_payment = round(C.SHOW_UP_FEE + performance_payment, 1)
@@ -854,7 +528,6 @@ class ExtraTaskResult(Page):
 
         performance_payment = float(final_profit) * C.CONVERSION_RATE
         performance_payment = round(performance_payment, 1)
-        if performance_payment <= 0: performance_payment = 0
         spending_game_payment = C.SHOW_UP_FEE + performance_payment
 
         # Calculate tasks payment (convert ECU to Euro)
@@ -903,125 +576,6 @@ class ExtraTaskResult(Page):
             player.extra_task_result_form_submitted = prev + str(data['form_submitted']) + ", "
 
 
-class DemographicPage(Page):
-    form_model = 'player'
-    form_fields = ['birth_year', 'gender', 'ethnicity', 'education_status', 'scr_importance']
-
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS
-
-    @staticmethod
-    def live_method(player, data):
-        if "page_loaded" in data:
-            prev = player.field_maybe_none('demographic_page_loaded') or ''
-            player.demographic_page_loaded = prev + str(data['page_loaded']) + ", "
-        if "form_submitted" in data:
-            prev = player.field_maybe_none('demographic_form_submitted') or ''
-            player.demographic_form_submitted = prev + str(data['form_submitted']) + ", "
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        # Calculate and store all duration values when demographic page is submitted
-        def get_duration(page_loaded_str, form_submitted_str):
-            if not page_loaded_str or not page_loaded_str.strip() or not form_submitted_str or not form_submitted_str.strip():
-                return 0
-
-            try:
-                page_loaded_ts = [ts.strip() for ts in page_loaded_str.rstrip(', ').split(',') if ts.strip()]
-                form_submitted_ts = [ts.strip() for ts in form_submitted_str.rstrip(', ').split(',') if ts.strip()]
-
-                if not page_loaded_ts or not form_submitted_ts:
-                    return 0
-
-                # Pair them: visit 1 = (load[0], submit[0]), visit 2 = (load[1], submit[1]), etc.
-                min_len = min(len(page_loaded_ts), len(form_submitted_ts))
-
-                total_ms = 0.0
-                for i in range(min_len):
-                    start = float(page_loaded_ts[i])
-                    end = float(form_submitted_ts[i])
-                    if end > start:  # avoid negative durations just in case
-                        total_ms += end - start
-
-                return round(total_ms / 1000.0, 3)  # convert ms → seconds
-            except (ValueError, TypeError, IndexError) as e:
-                print('Error computing duration:', e, page_loaded_str, form_submitted_str)
-                return 0
-
-        # Get all rounds for this player
-        all_rounds = player.in_all_rounds()
-        first_round_player = all_rounds[0]  # Round 1
-        last_round_player = all_rounds[-1]  # Last round (current)
-
-        # Calculate individual page durations
-        welcoming_duration = get_duration(first_round_player.welcoming_page_loaded,
-                                          first_round_player.welcoming_form_submitted)
-        instruction1_duration = get_duration(first_round_player.instruction1_page_loaded,
-                                          first_round_player.instruction1_form_submitted)
-        instruction2_duration = get_duration(first_round_player.instruction2_page_loaded,
-                                             first_round_player.instruction2_form_submitted)
-        payment_duration = get_duration(first_round_player.payment_page_loaded,
-                                          first_round_player.payment_form_submitted)
-        question_duration = get_duration(first_round_player.question_page_loaded,
-                                         first_round_player.question_form_submitted)
-        game_result_duration = get_duration(last_round_player.game_result_page_loaded,
-                                            last_round_player.game_result_form_submitted)
-        extra_task1_duration = get_duration(last_round_player.extra_task1_page_loaded,
-                                            last_round_player.extra_task1_form_submitted)
-        extra_task2_duration = get_duration(last_round_player.extra_task2_page_loaded,
-                                            last_round_player.extra_task2_form_submitted)
-        extra_task_result_duration = get_duration(last_round_player.extra_task_result_page_loaded,
-                                                  last_round_player.extra_task_result_form_submitted)
-        demographic_duration = get_duration(last_round_player.demographic_page_loaded,
-                                            last_round_player.demographic_form_submitted)
-
-        # Calculate total game duration from all rounds
-        total_game_duration = 0
-        all_game_page_loaded = []
-        all_game_form_submitted = []
-        for p in all_rounds:
-            if p.game_page_loaded and p.game_page_loaded.strip():
-                all_game_page_loaded.extend(
-                    [ts.strip() for ts in p.game_page_loaded.rstrip(', ').split(',') if ts.strip()])
-            if p.game_form_submitted and p.game_form_submitted.strip():
-                all_game_form_submitted.extend(
-                    [ts.strip() for ts in p.game_form_submitted.rstrip(', ').split(',') if ts.strip()])
-
-        if all_game_page_loaded and all_game_form_submitted:
-            try:
-                min_len = min(len(all_game_page_loaded), len(all_game_form_submitted))
-                total_ms = sum(
-                    max(0, float(all_game_form_submitted[i]) - float(all_game_page_loaded[i])) for i in range(min_len))
-                total_game_duration = round(total_ms / 1000.0, 3)
-            except (ValueError, TypeError, IndexError):
-                pass
-
-        # Store individual durations in the last round player
-        last_round_player.welcoming_duration = welcoming_duration
-        last_round_player.instruction1_duration = instruction1_duration
-        last_round_player.instruction2_duration = instruction2_duration
-        last_round_player.payment_duration = payment_duration
-        last_round_player.question_duration = question_duration
-        last_round_player.game_duration = total_game_duration
-        last_round_player.game_result_duration = game_result_duration
-        last_round_player.extra_task1_duration = extra_task1_duration
-        last_round_player.extra_task2_duration = extra_task2_duration
-        last_round_player.extra_task_result_duration = extra_task_result_duration
-        last_round_player.demographic_duration = demographic_duration
-
-        # Calculate and store total durations
-        total_duration = (welcoming_duration + instruction1_duration + instruction2_duration + payment_duration +
-                          question_duration + total_game_duration + game_result_duration + extra_task1_duration +
-                          extra_task2_duration + extra_task_result_duration + demographic_duration)
-        last_round_player.total_duration = round(total_duration, 3)
-
-        total_duration_excluding_results = (welcoming_duration + instruction1_duration + instruction2_duration +
-                                            payment_duration + question_duration + total_game_duration +
-                                            extra_task1_duration + extra_task2_duration + demographic_duration)
-        last_round_player.total_duration_excluding_results = round(total_duration_excluding_results, 3)
-
-
 class EndingPage(Page):
     @staticmethod
     def is_displayed(player: Player):
@@ -1054,47 +608,6 @@ class EndingPage(Page):
 
         # Total payment
         total_payment = round(spending_game_payment + tasks_total_payment, 1)
-
-        # Get demographic data
-        gender_labels = dict(C.GENDER_CHOICES)
-        ethnicity_labels = dict(C.ETHNICITY_CHOICES)
-        education_labels = dict(C.EDUCATION_CHOICES)
-
-        return dict(
-            # Spending game
-            final_profit=final_profit,
-            initial_profit=C.INITIAL_PROFIT,
-            show_up_fee=C.SHOW_UP_FEE,
-            performance_payment=performance_payment,
-            spending_game_payment=spending_game_payment,
-
-            # Task 1
-            task1_selected_decision=player.task1_selected_decision,
-            task1_random_number=player.task1_random_number,
-            task1_choice=getattr(player, f'task1_d{player.task1_selected_decision}'),
-            task1_payoff=player.task1_payoff,
-            task1_payment=task1_payment,
-
-            # Task 2
-            task2_selected_gamble=player.task2_selected_gamble,
-            task2_choice=getattr(player, f'task2_g{player.task2_selected_gamble}'),
-            task2_outcome=player.task2_outcome,
-            task2_payoff=player.task2_payoff,
-            task2_payment=task2_payment,
-
-            # Totals
-            tasks_total_payment=tasks_total_payment,
-            total_payment=total_payment,
-
-            # Demographics
-            birth_year=player.birth_year,
-            gender=gender_labels.get(player.gender, player.gender) if player.gender else 'Not provided',
-            ethnicity=ethnicity_labels.get(player.ethnicity, player.ethnicity) if player.ethnicity else 'Not provided',
-            education_status=education_labels.get(player.education_status,
-                                                  player.education_status) if player.education_status else 'Not provided',
-            scr_importance=player.scr_importance if player.scr_importance else 'Not provided',
-        )
-
 
 def custom_export_game(players):
     players = sorted(players, key=lambda p: (p.id_in_group, p.round_number))
@@ -1167,30 +680,6 @@ def custom_export_tasks(players):
                 p.task2_payoff,
             ]
 
-def custom_export_demographics(players):
-    players = sorted(players, key=lambda p: (p.id_in_group))
-
-    yield [
-        'player_id',
-        'player_code',
-        'birth_year',
-        'gender',
-        'ethnicity',
-        'education_status',
-        'scr_importance',
-    ]
-
-    for p in players:
-        if p.task1_selected_decision is not None:
-            yield [
-                p.id_in_group,
-                p.participant.code,
-                p.birth_year,
-                p.gender,
-                p.ethnicity,
-                p.education_status,
-                p.scr_importance,
-            ]
 
 def custom_export_time_tracking(players):
     # Filter to only include last round players with duration data
@@ -1237,4 +726,4 @@ def custom_export_time_tracking(players):
             ]
 
 
-page_sequence = [WelcomingPage, InstructionPage1, InstructionPage2, PaymentInfo, QuestionPage, GamePage, GameResultPage, ExtraTask1, ExtraTask2, ExtraTaskResult, DemographicPage, EndingPage]
+page_sequence = [WelcomingPage, InstructionPage1, InstructionPage2, PaymentInfo, GamePage, GameResultPage, ExtraTask1, ExtraTask2, ExtraTaskResult, EndingPage]

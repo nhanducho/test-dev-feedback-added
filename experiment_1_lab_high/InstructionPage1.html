@@ -51,36 +51,6 @@
         gap: 20px;
         }
 
-        /* Table Styles */
-        .table-container {
-            overflow-x: auto;
-            margin: 30px 0;
-        }
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0 auto;
-        }
-        .data-table thead tr {
-            background-color: transparent;
-        }
-        .data-table th,
-        .data-table td {
-            border: 1px solid #000000;
-            padding: 12px;
-            text-align: center;
-        }
-        .data-table th {
-            font-weight: normal;
-        }
-        .data-table tbody tr {
-            background-color: transparent;
-            font-weight: bold;
-        }
-        .row-header {
-            font-weight: bold;
-        }
-
         .otree-btn-next {
             background: #000000 !important;
             color: white !important;
@@ -175,23 +145,60 @@
 
 <div class="welcoming-container">
     <p class="content-text" style="text-align: center;">
-        <span class="highlight">Your Payment Determination</span>
+                <span class="highlight">Experiment Description</span>
     </p>
     <p class="content-text">
-        At the end of the experiment, your final profit, which has been summed up from the realized profits of each 100
-        rounds, will be converted into Euros (€) at a rate of <b>€1 per 1250 ECU</b>. This performance bonus will then
-        be added to your participant fee of <b>€3</b>.
+        In this experiment, you will be playing the role of an executive manager of a corporation.
+        As the global supply chain has become increasingly unstable over recent years, your firm
+        is constantly exposed to the risks of supply chain disruption (hereafter referred to as SC disruption).
+        Without proper preparation, you risk incurring substantial costs when disruptions occur due to
+        unfulfilled orders, operational breakdowns, and damaged reputation. To forestall disruptions
+        and minimize their impact on your business, you are advised by the supply chain manager to
+        allocate sufficient resources to enhance the resilience of your supply chain. In each round of
+        this experiment, your task is to decide how much money to allocate for building and maintaining
+        supply chain resilience (hereafter referred to as SC resilience). The detailed experimental procedure
+        and rules are explained below.
+    </p>
+
+    <p class="content-text" style="text-align: center;">
+        <span class="highlight">Experimental Procedure</span>
     </p>
     <p class="content-text">
-        <i>
-            Please be aware that your final profit could be less than or equal to 0 if you incur many substantial losses
-            and/or excess spending. Should this be the case after 100 rounds of the game, your performance bonus will be
-            automatically set at 0, but your participant fee of €3 will remain intact.
-        </i>
+        You will play a game in which you need to make decisions in each of 100 identical rounds:
     </p>
     <p class="content-text">
-        After completing the game, you will need to finish two short additional tasks, which will give you the chance to
-        earn more money, and finally answer the demographic questionnaire.
+        - At the beginning of each round, you will certainly earn 100 ECU (Experimental Currency Unit)
+        of gross profit. You need to determine how much to spend on SC resilience; you are free to
+        insert your spending decision <b>between 0 and 100 ECU</b>.
+    </p>
+    <p class="content-text">
+        - Once you submit your spending decision, a pop-up notification will appear, confirming whether
+        you were affected by a disruption and its impact (if a disruption occurred).
+    </p>
+    <p class="content-text">
+        - Your net profit (or loss) in each round will be computed and displayed in the performance table.
+        There are two scenarios, with or without disruption, which will result in gaining (realized net profit)
+        or losing (loss due to disruption impact):
+    </p>
+    <p class="content-text" style="margin-left: 40px;">
+        ○ If there is no disruption happening, your net profit will be:<br>
+        <span class="highlight">
+            Net Profit = Gross Profit – SC Resilience Spending
+        </span>
+    </p>
+    <p class="content-text" style="margin-left: 40px;">
+        ○ If there is a disruption happening, your loss will be:<br>
+        <span class="highlight">
+            Loss = Gross Profit – SC Resilience Spending – Disruption Impact
+        </span>
+    </p>
+    <p class="content-text">
+        - If you incur a loss in a particular round, your cumulative profit up to that point will be
+        immediately reduced, corresponding to the financial impact of disruption.
+    </p>
+    <p class="content-text">
+        - Your realized profit (or loss) in each round will be added up to determine your final performance
+        at the end of the game. This performance will then be converted to your bonus and added to your show-up fee.
     </p>
 
     <div class="submit-container">

@@ -364,20 +364,14 @@
         line-height: 35px;
     }
 
-    .calc-reminder {
-    margin-top: 1px;
-    font-size: 13px;
-    font-style: italic;
-    }
-
     /* Calculator Modal */
     .calculator-modal {
         display: none;
         position: absolute;
-        bottom: 100%;
+        top: 100%;
         left: 50%;
         transform: translateX(-50%);
-        margin-bottom: 10px;
+        margin-top: 10px;
         background-color: white;
         border: 2px solid #000;
         border-radius: 8px;
@@ -439,6 +433,120 @@
 
     .calculator-result {
         width: 100%;
+    }
+
+    /* Disruption Info Popup */
+    .disruption-info-popup {
+        display: none;
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: 10px;
+        background-color: white;
+        border: 2px solid #0000FF;
+        border-radius: 8px;
+        padding: 20px 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 99;
+        width: 350px;
+        min-height: 80px;
+    }
+
+    .disruption-info-popup.active {
+        display: block;
+    }
+
+    .disruption-info-popup.status-yes {
+        border: 2px solid #FF0000;
+    }
+
+    .disruption-info-popup.status-yes .disruption-info-title {
+        color: #FF0000;
+    }
+
+    .disruption-info-popup.status-yes .disruption-info-message {
+        color: #FF0000;
+    }
+
+    .disruption-info-popup.status-no {
+        border: 2px solid #0000FF;
+        width: 350px;
+        min-height: 80px;
+        padding: 20px 30px;
+    }
+
+    .disruption-info-popup.status-no .disruption-info-message {
+        color: #0000FF;
+    }
+
+    .disruption-info-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        position: relative;
+    }
+
+    .disruption-info-title {
+        font-weight: bold;
+        font-size: 16px;
+        text-align: center;
+        color: #000000;
+    }
+
+    .disruption-info-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 0;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        color: #0000FF;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .disruption-info-close:hover {
+        color: #0000FF;
+    }
+
+    .disruption-info-popup.status-yes .disruption-info-close {
+        color: #FF0000;
+    }
+
+    .disruption-info-popup.status-yes .disruption-info-close:hover {
+        color: #CC0000;
+    }
+
+    .disruption-info-content {
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.8;
+        min-height: 50px;
+    }
+
+    .disruption-info-message {
+        font-weight: bold;
+        color: #0000FF;
+    }
+
+    .disruption-info-message.status-yes {
+        color: #FF0000;
+    }
+
+    .disruption-info-row {
+        margin: 8px 0;
+    }
+
+    .disruption-info-row strong {
+        display: inline-block;
+        min-width: 160px;
+        color: #000000;
     }
 
     .spending-instruction {
@@ -728,7 +836,7 @@
             <div class="info-box-content">
                 <div class="disruption-content">
                     <div class="disruption-status">
-                        Disruption happening in this round:
+                        Disruption happened in the last round:
                         {{ if last_result }}
                             {{ if last_result.is_disrupted }}
                                 <span class="status-text status-yes">YES</span>
@@ -740,7 +848,7 @@
                         {{ endif }}
                     </div>
                     <div class="disruption-cost">
-                        Disruption cost in this round:
+                        Disruption impact in the last round:
                         {{ if last_result }}
                             {{ if last_result.is_disrupted }}
                             <span class="cost-value-yes">{{ last_result.cost_of_disruption }} ECU</span>
@@ -803,6 +911,18 @@
                         {{ formfields }}
                         <span class="ecu-label">(ECU)</span>
 
+                        <!-- Disruption Info Popup -->
+                        <div class="disruption-info-popup" id="disruptionInfoPopup">
+                            <div class="disruption-info-header">
+                                <button class="disruption-info-close" id="closeDisruptionInfo">&times;</button>
+                            </div>
+                            <div class="disruption-info-content">
+                                <div class="disruption-info-message" id="disruptionInfoMessage">
+                                    No disruption happened last round.
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Calculator Modal -->
                         <div class="calculator-modal" id="calculatorModal">
                             <div class="calculator-modal-header">
@@ -841,57 +961,173 @@
     </div>
 </div>
 
+<!-- Data attributes for server-side template rendering -->
+<div id="disruption-data" data-last-result="{{ if last_result }}true{{ else }}false{{ endif }}"
+    data-is-disrupted="{{ if last_result }}{{ if last_result.is_disrupted }}true{{ else }}false{{ endif }}{{ else }}false{{ endif }}"
+    data-cost="{{ if last_result }}{{ if last_result.is_disrupted }}{{ last_result.cost_of_disruption }}{{ else }}0{{ endif }}{{ else }}0{{ endif }}"
+    data-current-round="{{ player.round_number }}" style="display:none;"></div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Modal functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        // ============================================
+        // 1. GET DISRUPTION DATA FROM SERVER
+        // ============================================
+        const disruptionDataEl = document.getElementById('disruption-data');
+        const hasLastResult = disruptionDataEl && disruptionDataEl.dataset.lastResult === 'true';
+        const lastResultIsDisrupted = disruptionDataEl && disruptionDataEl.dataset.isDisrupted === 'true';
+        const lastResultCost = disruptionDataEl ? (parseInt(disruptionDataEl.dataset.cost) || 0) : 0;
+        const currentRound = disruptionDataEl ? (parseInt(disruptionDataEl.dataset.currentRound) || 1) : 1;
+
+        // Store in global scope for access
+        window.lastResultData = {
+            hasResult: hasLastResult,
+            isDisrupted: lastResultIsDisrupted,
+            costOfDisruption: lastResultCost
+        };
+
+        // Highlight current round in table
+        const rows = document.querySelectorAll('.performance-table tbody tr');
+        rows.forEach(function (row) {
+            const rowRound = parseInt(row.dataset.round);
+            if (rowRound === currentRound) {
+                row.classList.add('current-round');
+            }
+        });
+
+        // ============================================
+        // 2. INSTRUCTIONS MODAL
+        // ============================================
         const modal = document.getElementById('instructionsModal');
         const instructionsLink = document.querySelector('.instructions-link');
         const closeModal = document.getElementById('closeModal');
 
-        // Open modal
-        instructionsLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            modal.classList.add('active');
-        });
+        if (instructionsLink && modal && closeModal) {
+            instructionsLink.addEventListener('click', function (e) {
+                e.preventDefault();
+                modal.classList.add('active');
+            });
 
-        // Close modal with X button
-        closeModal.addEventListener('click', function() {
-            modal.classList.remove('active');
-        });
-
-        // Close modal when clicking outside
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
+            closeModal.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
                 modal.classList.remove('active');
-            }
-        });
+            });
 
-        // Calculator Modal functionality
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    modal.classList.remove('active');
+                }
+            });
+        }
+
+        // ============================================
+        // 3. CALCULATOR MODAL
+        // ============================================
         const calculatorModal = document.getElementById('calculatorModal');
         const calculatorIcon = document.getElementById('calculatorIcon');
         const closeCalculatorModal = document.getElementById('closeCalculatorModal');
         let isCalculatorOpen = false;
 
-        // Open calculator modal
-        calculatorIcon.addEventListener('click', function(e) {
-            e.stopPropagation();
-            calculatorModal.classList.add('active');
-            isCalculatorOpen = true;
-        });
+        if (calculatorIcon && calculatorModal && closeCalculatorModal) {
+            // Open calculator
+            calculatorIcon.addEventListener('click', function (e) {
+                e.stopPropagation();
+                calculatorModal.classList.add('active');
+                isCalculatorOpen = true;
+            });
 
-        // Close calculator modal with X button only
-        closeCalculatorModal.addEventListener('click', function(e) {
-            e.stopPropagation();
-            calculatorModal.classList.remove('active');
-            isCalculatorOpen = false;
-        });
+            // Close calculator with X button
+            closeCalculatorModal.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                calculatorModal.classList.remove('active');
+                isCalculatorOpen = false;
+            });
 
-        // Prevent modal from closing when clicking inside it
-        calculatorModal.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
+            // Prevent closing when clicking inside
+            calculatorModal.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        }
 
-        // Calculator function
+        // ============================================
+        // 4. DISRUPTION INFO POPUP
+        // ============================================
+        const disruptionInfoPopup = document.getElementById('disruptionInfoPopup');
+        const closeDisruptionInfo = document.getElementById('closeDisruptionInfo');
+        const disruptionInfoMessage = document.getElementById('disruptionInfoMessage');
+
+        // Flags to control popup behavior
+        let popupAutoShown = false;
+        let userHasInteracted = false;
+
+        // Function to update popup content and styling
+        function updateDisruptionInfoPopup() {
+            if (!disruptionInfoPopup || !disruptionInfoMessage) return;
+
+            if (window.lastResultData.isDisrupted) {
+                // RED - Disruption happened
+                disruptionInfoMessage.textContent = 'Disruption happened last round with the impact of ' +
+                    window.lastResultData.costOfDisruption + ' ECU. Be careful in future spending!';
+                disruptionInfoMessage.className = 'disruption-info-message status-yes';
+                disruptionInfoPopup.classList.remove('status-no');
+                disruptionInfoPopup.classList.add('status-yes');
+            } else {
+                // BLUE - No disruption
+                disruptionInfoMessage.textContent = 'No disruption happened last round';
+                disruptionInfoMessage.className = 'disruption-info-message';
+                disruptionInfoPopup.classList.remove('status-yes');
+                disruptionInfoPopup.classList.add('status-no');
+            }
+        }
+
+        // Function to show popup
+        function showDisruptionInfoPopup() {
+            if (!disruptionInfoPopup) return;
+
+            updateDisruptionInfoPopup();
+            disruptionInfoPopup.classList.add('active');
+            popupAutoShown = true;
+        }
+
+        // Function to hide popup - respects initial auto-show state
+        function hideDisruptionInfoPopup(force) {
+            if (!disruptionInfoPopup) return;
+
+            // Don't hide if popup was just auto-shown and user hasn't truly interacted yet
+            // Unless force is true (used by close button)
+            if (!force && popupAutoShown && !userHasInteracted) {
+                return;
+            }
+
+            disruptionInfoPopup.classList.remove('active');
+        }
+
+        // Function to mark user interaction
+        function markUserInteraction() {
+            userHasInteracted = true;
+        }
+
+        // Close button handler
+        if (closeDisruptionInfo && disruptionInfoPopup) {
+            closeDisruptionInfo.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                markUserInteraction();
+                hideDisruptionInfoPopup(true); // Force hide
+            });
+
+            // Prevent closing when clicking inside popup
+            disruptionInfoPopup.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        }
+
+        // ============================================
+        // 5. CALCULATOR FUNCTION
+        // ============================================
         function calculateDisruption(spending) {
             const BASIC_PROBABILITY = 5;
             const DISRUPTION_COST = 2000;
@@ -908,7 +1144,9 @@
             };
         }
 
-        // Handle Enter key submission and calculator update
+        // ============================================
+        // 6. INPUT FIELD HANDLING
+        // ============================================
         const moneyInput = document.querySelector('input[name="money_input"]');
         const calculatorResult = document.getElementById('calculatorResult');
         const calculatorPlaceholder = document.getElementById('calculatorPlaceholder');
@@ -916,30 +1154,95 @@
         const calcImpact = document.getElementById('calcImpact');
 
         if (moneyInput) {
-            // Input validation and calculator update
-            moneyInput.addEventListener('input', function(e) {
-                let value = parseInt(e.target.value);
-                if (value < 0) e.target.value = 0;
-                if (value > 100) e.target.value = 100;
+            // Set attributes for multiples of 10
+            moneyInput.setAttribute('step', '10');
+            moneyInput.setAttribute('min', '0');
+            moneyInput.setAttribute('max', '100');
 
-                // Update calculator
+            // Function to round value to nearest 10
+            function roundToNearest10(val) {
+                if (isNaN(val)) return 0;
+                if (val < 0) val = 0;
+                if (val > 100) val = 100;
+                return Math.round(val / 10) * 10;
+            }
+
+            // Debounce timer for auto-rounding
+            let roundingTimer = null;
+
+            // Input event - allow free typing, auto-round after 500ms
+            moneyInput.addEventListener('input', function (e) {
+                let value = parseInt(e.target.value);
+
+                // Validate range during typing
+                if (!isNaN(value)) {
+                    if (value < 0) e.target.value = 0;
+                    if (value > 100) e.target.value = 100;
+                    value = parseInt(e.target.value);
+                }
+
+                // Mark user has interacted and hide disruption popup when typing
+                markUserInteraction();
+                hideDisruptionInfoPopup();
+
+                // Update calculator display with rounded value preview
                 if (e.target.value === '' || isNaN(value)) {
                     calculatorResult.style.display = 'none';
                     calculatorPlaceholder.style.display = 'block';
                 } else {
-                    const result = calculateDisruption(value);
+                    const roundedValue = roundToNearest10(value);
+                    const result = calculateDisruption(roundedValue);
                     calcProbability.textContent = result.probability;
                     calcImpact.textContent = result.impact;
                     calculatorResult.style.display = 'block';
                     calculatorPlaceholder.style.display = 'none';
                 }
+
+                // Clear previous timer and set new one to auto-round after 500ms
+                clearTimeout(roundingTimer);
+                roundingTimer = setTimeout(function () {
+                    let currentValue = parseInt(moneyInput.value);
+                    if (!isNaN(currentValue)) {
+                        const rounded = roundToNearest10(currentValue);
+                        if (rounded !== currentValue) {
+                            moneyInput.value = rounded;
+                            // Trigger animation
+                            moneyInput.classList.remove('rounding');
+                            void moneyInput.offsetWidth; // Force reflow
+                            moneyInput.classList.add('rounding');
+                        }
+                    }
+                }, 500);
             });
 
-            // Enter key handling
-            moneyInput.addEventListener('keydown', function(e) {
+            // Blur event - round immediately when leaving the field
+            moneyInput.addEventListener('blur', function (e) {
+                clearTimeout(roundingTimer); // Cancel pending timer
+                let value = parseInt(e.target.value);
+                if (!isNaN(value)) {
+                    const rounded = roundToNearest10(value);
+                    if (rounded !== value) {
+                        e.target.value = rounded;
+                        // Trigger animation
+                        moneyInput.classList.remove('rounding');
+                        void moneyInput.offsetWidth; // Force reflow
+                        moneyInput.classList.add('rounding');
+                    }
+                }
+            });
+
+            // Enter key to submit (round before submitting)
+            moneyInput.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     e.stopPropagation();
+
+                    // Round value before submit
+                    let value = parseInt(moneyInput.value);
+                    if (!isNaN(value)) {
+                        moneyInput.value = roundToNearest10(value);
+                    }
+
                     const submitButton = document.querySelector('.otree-btn-next');
                     if (submitButton && !submitButton.disabled) {
                         submitButton.click();
@@ -947,10 +1250,7 @@
                 }
             });
 
-            // Focus the input
-            moneyInput.focus();
-
-            // Initialize calculator if there's already a value
+            // Initialize calculator if there's a value (sync, no delay needed)
             if (moneyInput.value && !isNaN(parseInt(moneyInput.value))) {
                 const value = parseInt(moneyInput.value);
                 const result = calculateDisruption(value);
@@ -959,52 +1259,58 @@
                 calculatorResult.style.display = 'block';
                 calculatorPlaceholder.style.display = 'none';
             }
+
+            // Show disruption popup BEFORE focusing input
+            // This ensures popupAutoShown is true before focus event triggers
+            if (window.lastResultData.hasResult) {
+                showDisruptionInfoPopup();
+            }
+
+            // Focus input (after showing popup so it won't hide immediately)
+            moneyInput.focus();
         }
 
-        // Change button text and prevent modal closing on submit
+        // ============================================
+        // 8. BUTTON TEXT
+        // ============================================
         const nextBtn = document.querySelector('.otree-btn-next');
         if (nextBtn) {
             nextBtn.textContent = 'Submit';
         }
 
-        // Handle form submission to keep calculator open
-        const form = document.querySelector('form');
-        if (form) {
-            form.addEventListener('submit', function(e) {
+        // ============================================
+        // 9. FORM SUBMISSION & TIME TRACKING (merged)
+        // ============================================
+        const formElement = document.querySelector('form');
+        let startTime = Date.now();
+
+        // Send page loaded time
+        if (typeof liveSend !== 'undefined') {
+            liveSend({ 'page_loaded': startTime });
+        }
+
+        if (formElement) {
+            formElement.addEventListener('submit', function (e) {
+                // Save calculator state
                 if (isCalculatorOpen) {
-                    // Store calculator state before form submission
                     sessionStorage.setItem('calculatorWasOpen', 'true');
+                }
+                // Send form submitted time
+                if (typeof liveSend !== 'undefined') {
+                    liveSend({ 'form_submitted': Date.now() });
                 }
             });
         }
 
-        // Restore calculator state after page load
+        // Restore calculator state (sync, no delay needed after DOMContentLoaded)
         if (sessionStorage.getItem('calculatorWasOpen') === 'true') {
-            calculatorModal.classList.add('active');
-            isCalculatorOpen = true;
+            if (calculatorModal) {
+                calculatorModal.classList.add('active');
+                isCalculatorOpen = true;
+            }
             sessionStorage.removeItem('calculatorWasOpen');
         }
-
     });
-
-    // Time tracking
-    window.onload = function() {
-        startTime = Date.now();
-        liveSend({'page_loaded': startTime});
-    };
-
-    function getTime() {
-        endTime = Date.now();
-        liveSend({'form_submitted': endTime});
-    };
-
-    // Intercept form submission
-    const form = document.querySelector('form');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            getTime();
-        });
-    }
 </script>
 
 {{ endblock }}
