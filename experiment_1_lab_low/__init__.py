@@ -16,7 +16,7 @@ class C(BaseConstants):
     DISRUPTION_COST = 2000
     BASIC_PROBABILITY = 5
     SHOW_UP_FEE = 3.0
-    CONVERSION_RATE = 1 / 750
+    CONVERSION_RATE = 1 / 500
 
     # Comprehension Questions - 8 Multiple Choice Questions
     COMP_QUESTIONS_MC = [
