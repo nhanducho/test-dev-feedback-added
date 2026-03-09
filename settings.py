@@ -66,9 +66,9 @@ USE_POINTS = True
 POINTS_DECIMAL_PLACES = 1
 DEBUG = False
 
-OTREE_ADMIN_USERNAME = 'admin'
+ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
-OTREE_ADMIN_PASSWORD = environ.get('123456')
+ADMIN_PASSWORD = '123456'
 
 DEMO_PAGE_INTRO_HTML = """ """
 
