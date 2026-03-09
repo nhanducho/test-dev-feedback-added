@@ -68,7 +68,7 @@ DEBUG = False
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
-ADMIN_PASSWORD = environ.get('nhanDucHo@1456')
+ADMIN_PASSWORD = environ.get('123456')
 
 DEMO_PAGE_INTRO_HTML = """ """
 
