@@ -4,13 +4,13 @@ SESSION_CONFIGS = [
     dict(
         name='experiment_1_lab_low',
         app_sequence=['experiment_1_lab_low'],
-        num_demo_participants=1,
+        num_demo_participants=5,
         participation_fee=3.00,
     ),
     dict(
         name='experiment_1_lab_high',
         app_sequence=['experiment_1_lab_high'],
-        num_demo_participants=1,
+        num_demo_participants=5,
         participation_fee=3.00,
     ),
     dict(
