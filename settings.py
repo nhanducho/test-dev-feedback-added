@@ -41,14 +41,22 @@ SESSION_CONFIG_DEFAULTS = dict(
 ROOMS = [
     dict(
         name='exp_room_1',
-        display_name='Experiment 1 Room 1 (LOW PROBABILITY)',
+        display_name='Experiment 1 Session 1 (LOW PROBABILITY)',
     ),
     dict(
         name='exp_room_2',
-        display_name='Experiment 1 Room 2 (HIGH PROBABILITY)',
+        display_name='Experiment 1 Session 1 (HIGH PROBABILITY)',
     ),
     dict(
         name='exp_room_3',
+        display_name='Experiment 1 Session 2 (LOW PROBABILITY)',
+    ),
+    dict(
+        name='exp_room_4',
+        display_name='Experiment 1 Session 2 (HIGH PROBABILITY)',
+    ),
+    dict(
+        name='exp_room_5',
         display_name='Experiment 1 Room 3 (backup)',
     )
 ]
