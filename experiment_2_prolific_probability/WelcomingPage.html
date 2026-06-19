@@ -1,0 +1,195 @@
+{{ block content }}
+
+<style>
+        .otree-title {
+            display: none !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .otree-body {
+            max-width: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            padding: 20px;
+        }
+
+        .welcoming-container {
+            background-color: #FFFFFF;
+            border: 3px solid #000000;
+            border-radius: 0;
+            padding: 40px 60px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 30px auto;
+        }
+
+        .thank-you {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: #000000;
+        padding: 20px;
+        background-color: #d1cdcd;
+        border: 2px solid #a39e9e;
+        margin-bottom: 20px;
+        }
+
+        .welcoming-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #000000;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .content-section {
+            margin-bottom: 25px;
+        }
+
+        .content-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #000000;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .highlight {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .start-btn-container {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        .otree-btn-next {
+            background: #000000 !important;
+            color: white !important;
+            border: none !important;
+            padding: 18px 50px !important;
+            font-size: 18px !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+        }
+
+        .otree-btn-next:hover {
+            background: #333333 !important;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .welcoming-container {
+                padding: 40px 30px;
+            }
+
+            .welcoming-title {
+                font-size: 26px;
+                margin-bottom: 30px;
+            }
+
+            .content-text {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+
+            .highlight {
+            font-weight: bold;
+            }
+
+            .otree-btn-next {
+                padding: 15px 40px !important;
+                font-size: 16px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcoming-container {
+                padding: 30px 20px;
+            }
+
+            .welcoming-title {
+                font-size: 22px;
+            }
+
+            .content-text {
+                font-size: 15px;
+            }
+
+            .highlight {
+            font-weight: bold;
+            }
+
+            .otree-btn-next {
+                width: 100%;
+                padding: 15px 30px !important;
+                font-size: 15px !important;
+            }
+        }
+</style>
+
+<div class="welcoming-container">
+    <div class="thank-you">WELCOME TO THE SUPPLY CHAIN RISK MANAGEMENT EXPERIMENT</div>
+        <p class="content-text" style="text-align: center;">
+                <span class="highlight">General Information</span>
+    </p>
+    <div class="content-section">
+        <p class="content-text">
+            This game is an experiment on decision-making in supply chain risk management.
+        </p>
+        <p class="content-text">
+            Please read the instructions carefully. The task is simple, but your decisions
+            will directly affect your earnings. Since you may earn a substantial performance-based
+            bonus in addition to a fixed participation fee, which will all be paid at the end of
+            the experiment.
+        </p>
+        <p class="content-text">
+            To ensure you understand the task, you will be asked to answer several multiple-choice
+            comprehension questions after reading the instructions. You can start the experiment
+            only after answering all questions correctly.
+        </p>
+
+        <div class="start-btn-container">
+            <button class="otree-btn-next">NEXT</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        startTime = Date.now();
+        liveSend({'page_loaded': startTime});
+    };
+
+    function getTime() {
+        endTime = Date.now();
+        liveSend({'form_submitted': endTime});
+    };
+
+    // Intercept form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const nextButton = document.querySelector('.otree-btn-next');
+        if (nextButton) {
+            nextButton.addEventListener('click', function(e) {
+                getTime();
+            });
+        }
+    });
+</script>
+
+{{ endblock }}
+
+

@@ -1,0 +1,296 @@
+{{ block content }}
+
+<style>
+        .otree-title {
+            display: none !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .otree-body {
+            max-width: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            padding: 20px;
+        }
+
+        .welcoming-container {
+            background-color: #FFFFFF;
+            border: 3px solid #000000;
+            border-radius: 0;
+            padding: 40px 60px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 30px auto;
+        }
+
+        .content-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #000000;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .highlight {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .start-btn-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 35px;
+        gap: 20px;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .data-table thead tr {
+            background-color: transparent;
+        }
+        .data-table th,
+        .data-table td {
+            border: 1px solid #000000;
+            padding: 12px;
+            text-align: center;
+        }
+        .data-table th {
+            font-weight: normal;
+        }
+        .data-table tbody tr {
+            background-color: transparent;
+            font-weight: bold;
+        }
+        .row-header {
+            font-weight: bold;
+        }
+
+        .otree-btn-next {
+            background: #000000 !important;
+            color: white !important;
+            border: none !important;
+            padding: 18px 50px !important;
+            font-size: 18px !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+        }
+
+        .otree-btn-next:hover {
+            background: #333333 !important;
+            transform: translateY(-2px);
+        }
+
+        /* Back button styling */
+        .btn-outline-secondary,
+        .otree-btn-back {
+        background: transparent !important;
+        color: #000000 !important;
+        border: 3px solid #000000 !important;
+        padding: 18px 50px !important;
+        font-size: 18px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+        margin-right: 15px !important;
+        }
+
+        .btn-outline-secondary:hover,
+        .otree-btn-back:hover {
+        background: #000000 !important;
+        color: white !important;
+        transform: translateY(-2px);
+        }
+
+        .submit-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 35px;
+        gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .welcoming-container {
+                padding: 40px 30px;
+            }
+
+            .content-text {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+
+            .otree-btn-next {
+                padding: 15px 40px !important;
+                font-size: 16px !important;
+            }
+
+            .otree-btn-back {
+                width: 100%;
+                padding: 15px 30px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcoming-container {
+                padding: 30px 20px;
+            }
+
+            .content-text {
+                font-size: 15px;
+            }
+
+            .otree-btn-next {
+                width: 100%;
+                padding: 15px 30px !important;
+                font-size: 15px !important;
+            }
+
+            .otree-btn-back {
+                width: 100%;
+                padding: 15px 30px !important;
+            }
+        }
+</style>
+
+<div class="welcoming-container">
+    <p class="content-text" style="text-align: center;">
+        <span class="highlight">Supply Chain Disruption Scenario</span>
+    </p>
+    <p class="content-text">
+        Your company is exposed to the risk of supply chain disruptions. Examples include a flood affecting your
+        factory, a blocked shipping route, political unrest, or the shutdown of an important supplier.
+    </p>
+    <p class="content-text">
+        If a disruption affects your company, you are unable to fulfill customer orders. As a result, your company
+        incurs substantial losses.
+    </p>
+    <p class="content-text">
+        In each round, your company can earn up to <b>100 ECU</b> (equal to gross profit) by fulfilling all customer
+        orders and not spending anything on resilience. However, if a disruption occurs, your company suffers a
+        significant loss of <b>500 ECU</b>.
+    </p>
+    <p class="content-text">
+        <i>Without spending on supply chain resilience (0 ECU), the probability of a disruption occurring is <b>20%</b>,
+        and the disruption loss is <b>500 ECU</b> if a disruption occurs.</i>
+    </p>
+    <p class="content-text">
+        Please note that whether a disruption occurs in one round is independent of all other rounds. This means that
+        a disruption in one round does not make a disruption more or less likely in any other round.
+    </p>
+
+    <p class="content-text" style="text-align: center;">
+        <span class="highlight">How Supply Chain Resilience Spending Works</span>
+    </p>
+    <p class="content-text">
+        Spending on supply chain resilience reduces the loss your company would suffer if a disruption occurs.
+    </p>
+    <p class="content-text">
+        The rule is simple: the more you spend on resilience, the lower the loss caused by a disruption when it occurs.
+    </p>
+    <p class="content-text">
+        If you spend <b>0 ECU</b> on resilience, the disruption loss remains <b>500 ECU</b>. If you spend <b>more</b>
+        than 0 ECU, the disruption loss <b>decreases</b>.
+    </p>
+    <p class="content-text">
+        The table below shows selected examples of disruption losses for different spending amounts. You may actually choose
+        any whole-number spending amount between <b>0 and 100</b> ECU. Your spending amount does not have to be a multiple
+        of 10. For example, you may choose <b>7 ECU, 17 ECU, 73 ECU, or any other whole number up to 100 ECU</b>.
+    </p>
+    <p class="content-text">
+        During the experiment, a decision-support tool is also provided to help you calculate the exact disruption loss
+        based on your chosen spending amount.
+    </p>
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>Spending (ECU)</th>
+                <th>0</th>
+                <th>10</th>
+                <th>20</th>
+                <th>30</th>
+                <th>40</th>
+                <th>50</th>
+                <th>60</th>
+                <th>70</th>
+                <th>80</th>
+                <th>90</th>
+                <th>100</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="row-header">Disruption Loss</td>
+                <td>500</td>
+                <td>450</td>
+                <td>400</td>
+                <td>350</td>
+                <td>300</td>
+                <td>250</td>
+                <td>200</td>
+                <td>150</td>
+                <td>100</td>
+                <td>50</td>
+                <td>0</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p class="content-text">
+        Please note that spending on resilience reduces the loss caused by a disruption, but it does <b>not</b> change
+        the probability that a disruption will occur. The disruption probability remains <b>20%</b> in each round.
+    </p>
+
+    <div class="submit-container">
+        {{ back_button }}
+        {{ next_button }}
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        startTime = Date.now();
+        liveSend({'page_loaded': startTime});
+    };
+
+    function getTime() {
+        endTime = Date.now();
+        liveSend({'form_submitted': endTime});
+    };
+
+    // Intercept form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const nextButton = document.querySelector('.otree-btn-next');
+        if (nextButton) {
+            nextButton.addEventListener('click', function(e) {
+                getTime();
+            });
+        }
+    });
+</script>
+
+{{ endblock }}
+
+

@@ -24,7 +24,19 @@ SESSION_CONFIGS = [
         app_sequence=['experiment_1_prolific_high'],
         num_demo_participants=5,
         participation_fee=3.00,
-    )
+    ),
+    dict(
+        name='experiment_2_prolific_probability',
+        app_sequence=['experiment_2_prolific_probability'],
+        num_demo_participants=5,
+        participation_fee=3.00,
+    ),
+    dict(
+        name='experiment_2_prolific_impact',
+        app_sequence=['experiment_2_prolific_impact'],
+        num_demo_participants=5,
+        participation_fee=3.00,
+    ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -61,7 +73,7 @@ SESSION_FIELDS = []
 LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'EUR'
+REAL_WORLD_CURRENCY_CODE = 'GBP'
 USE_POINTS = True
 POINTS_DECIMAL_PLACES = 1
 DEBUG = False
